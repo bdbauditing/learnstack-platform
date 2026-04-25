@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, NavLink } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
@@ -125,10 +125,10 @@ export default function PartPage() {
         {/* Exercises tab */}
         {tab === 'exercises' && (
           <div className="space-y-3">
-            {part.exerciseCount === 0 ? (
+            {part.exercises.length === 0 ? (
               <p className="text-sm text-gray-400">No exercises in this part.</p>
             ) : (
-              <ExerciseList trackSlug={trackSlug!} partSlug={partSlug!} count={part.exerciseCount} />
+              <ExerciseList trackSlug={trackSlug!} partSlug={partSlug!} exercises={part.exercises} />
             )}
           </div>
         )}
@@ -160,63 +160,36 @@ async function fetchConceptsMd(trackSlug: string, partSlug: string): Promise<str
   return data.content ?? '';
 }
 
-// Lazy exercise list — loads slugs from the part index
-function ExerciseList({ trackSlug, partSlug, count }: { trackSlug: string; partSlug: string; count: number }) {
-  const [exercises, setExercises] = useState<Array<{ slug: string; title: string; order: number }>>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    api.tracks.getPart(trackSlug, partSlug)
-      .then(() => {
-        // Part index doesn't include exercise slugs — fetch track to get exercise slugs
-        // For Step 2 we show placeholder numbered entries based on count
-        const placeholders = Array.from({ length: count }, (_, i) => ({
-          slug: '',
-          title: `Exercise ${String(i + 1).padStart(2, '0')}`,
-          order: i + 1,
-        }));
-        setExercises(placeholders);
-      })
-      .finally(() => setLoading(false));
-  }, [trackSlug, partSlug, count]);
-
-  if (loading) return <p className="text-sm text-gray-400">Loading exercises…</p>;
-
+function ExerciseList({
+  trackSlug,
+  partSlug,
+  exercises,
+}: {
+  trackSlug: string;
+  partSlug: string;
+  exercises: Array<{ slug: string; title: string; order: number }>;
+}) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 divide-y divide-gray-100">
       {exercises.map((ex) => (
-        <div key={ex.order} className="flex items-center justify-between px-5 py-3">
+        <NavLink
+          key={ex.slug}
+          to={`/tracks/${trackSlug}/parts/${partSlug}/exercises/${ex.slug}`}
+          className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors group"
+        >
           <div className="flex items-center gap-3">
             <span className="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-mono flex items-center justify-center shrink-0">
               {ex.order}
             </span>
-            <span className="text-sm text-gray-700">{ex.title}</span>
+            <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">
+              {ex.title}
+            </span>
           </div>
-          <StatusBadge order={ex.order} />
-        </div>
+          <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-400 font-medium">
+            Not started
+          </span>
+        </NavLink>
       ))}
     </div>
-  );
-}
-
-function StatusBadge({ order }: { order: number }) {
-  if (order <= 2) {
-    return (
-      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
-        Submitted
-      </span>
-    );
-  }
-  if (order === 3) {
-    return (
-      <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 font-medium">
-        In progress
-      </span>
-    );
-  }
-  return (
-    <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-400 font-medium">
-      Not started
-    </span>
   );
 }

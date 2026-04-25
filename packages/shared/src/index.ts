@@ -28,6 +28,7 @@ export interface PartIndex {
   order: number;
   exerciseCount: number;
   hasQuiz: boolean;
+  exercises: ExerciseIndex[];
 }
 
 export interface ExerciseIndex {
@@ -64,9 +65,11 @@ export interface QuizQuestion {
 export interface SubmissionDto {
   id: string;
   exerciseId: string;
+  forkUrl: string;
+  commitSha: string | null;
   status: SubmissionStatus;
   score: number | null;
-  feedback: unknown;
+  graderOutput: unknown;
   submittedAt: string;
   gradedAt: string | null;
 }

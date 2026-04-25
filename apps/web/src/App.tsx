@@ -4,6 +4,7 @@ import RequireAuth from './components/RequireAuth.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 import DashboardPage from './pages/DashboardPage.tsx';
 import PartPage from './pages/PartPage.tsx';
+import ExercisePage from './pages/ExercisePage.tsx';
 
 function App() {
   return (
@@ -25,6 +26,15 @@ function App() {
           element={
             <RequireAuth>
               <PartPage />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="/tracks/:trackSlug/parts/:partSlug/exercises/:exerciseSlug"
+          element={
+            <RequireAuth>
+              <ExercisePage />
             </RequireAuth>
           }
         />

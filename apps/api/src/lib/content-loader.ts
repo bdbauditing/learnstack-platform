@@ -51,12 +51,20 @@ export function getTrack(): TrackIndex {
       fs.statSync(path.join(exercisesDir, name)).isDirectory(),
     );
 
+    const exercises = exerciseSlugs.map((slug) => ({
+      slug,
+      title: extractTitle(path.join(exercisesDir, slug, 'README.md')),
+      order: extractOrder(slug),
+      partSlug,
+    }));
+
     return {
       slug: partSlug,
       title: extractTitle(readmePath),
       order: extractOrder(partSlug),
       exerciseCount: exerciseSlugs.length,
       hasQuiz: fs.existsSync(quizPath),
+      exercises,
     };
   });
 

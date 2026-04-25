@@ -1,0 +1,81 @@
+bugs:
+  - title: "[login/form] Submit button stays disabled even with valid credentials filled in"
+    location: "login/form"
+    severity: High
+    priority: High
+    environment:
+      browser: Chrome 130
+      os: macOS 14
+      viewport: 1440x900
+      url: "http://localhost:5173/login"
+    steps:
+      - action: navigate
+        url: "/login"
+      - action: type
+        selector: '[data-test="email"]'
+        value: "alice@taskforge.io"
+      - action: type
+        selector: '[data-test="password"]'
+        value: "Password1!"
+      - action: observe
+        selector: '[data-test="submit"]'
+    expected: "Submit button is enabled when email and password are filled in"
+    actual: "Submit button remains disabled — nothing happens when clicked"
+
+  - title: "[login/password] Password field shows plain text instead of masked dots"
+    location: "login/password"
+    severity: Medium
+    priority: Medium
+    environment:
+      browser: Chrome 130
+      os: macOS 14
+      viewport: 1440x900
+      url: "http://localhost:5173/login"
+    steps:
+      - action: navigate
+        url: "/login"
+      - action: type
+        selector: '[data-test="password"]'
+        value: "mySecretPassword"
+    expected: "Characters are masked with dots (type=password)"
+    actual: "Password is visible in plain text — input uses type='text'"
+
+  - title: "[login/forgot-password] Forgot password link navigates to 404 instead of reset page"
+    location: "login/forgot-password"
+    severity: Low
+    priority: Medium
+    environment:
+      browser: Chrome 130
+      os: macOS 14
+      viewport: 1440x900
+      url: "http://localhost:5173/login"
+    steps:
+      - action: navigate
+        url: "/login"
+      - action: click
+        selector: 'a[href*="forgot"]'
+    expected: "User sees the password reset form at /reset-password"
+    actual: "Browser shows a 404 page — link goes to /404"
+
+  - title: "[login] Wrong error message reveals valid username via enumeration"
+    location: "login"
+    severity: Medium
+    priority: High
+    environment:
+      browser: Chrome 130
+      os: macOS 14
+      viewport: 1440x900
+      url: "http://localhost:5173/login"
+    steps:
+      - action: navigate
+        url: "/login"
+      - action: type
+        selector: '[data-test="email"]'
+        value: "alice@taskforge.io"
+      - action: type
+        selector: '[data-test="password"]'
+        value: "wrongpassword"
+      - action: click
+        selector: '[data-test="submit"]'
+    expected: "Error says 'Invalid credentials'"
+    actual: "Error says 'Username not found' — leaks that the email is registered, enabling username enumeration"

@@ -56,15 +56,17 @@ model Enrollment {
 }
 
 model Submission {
-  id          String           @id @default(cuid())
-  userId      String
-  exerciseId  String
-  payload     Json
-  status      SubmissionStatus @default(PENDING)
-  score       Float?
-  feedback    Json?
-  submittedAt DateTime         @default(now())
-  gradedAt    DateTime?
+  id            String           @id @default(cuid())
+  userId        String
+  exerciseId    String
+  forkUrl       String
+  commitSha     String?
+  payload       Json
+  status        SubmissionStatus @default(PENDING)
+  score         Float?
+  graderOutput  Json?
+  submittedAt   DateTime         @default(now())
+  gradedAt      DateTime?
 
   user User @relation(fields: [userId], references: [id])
 }
