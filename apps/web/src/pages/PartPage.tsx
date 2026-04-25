@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
-import type { TrackIndex, QuizData } from '@learnstack/shared';
+import type { TrackIndex, QuizData, ExerciseProgress, QuizAttemptDto } from '@learnstack/shared';
 import { api } from '../lib/api.ts';
 import Nav from '../components/Nav.tsx';
 import Quiz from '../components/Quiz.tsx';
@@ -12,7 +12,6 @@ import 'highlight.js/styles/github.css';
 
 type Tab = 'concepts' | 'exercises' | 'quiz';
 
-// Allow class attributes on code/pre so rehype-highlight classes survive sanitization
 const sanitizeSchema = {
   ...defaultSchema,
   attributes: {
@@ -28,6 +27,8 @@ export default function PartPage() {
   const [track, setTrack] = useState<TrackIndex | null>(null);
   const [conceptsMd, setConceptsMd] = useState('');
   const [quiz, setQuiz] = useState<QuizData | null>(null);
+  const [latestAttempt, setLatestAttempt] = useState<QuizAttemptDto | null>(null);
+  const [progress, setProgress] = useState<ExerciseProgress[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [tab, setTab] = useState<Tab>('concepts');
@@ -40,11 +41,15 @@ export default function PartPage() {
       api.tracks.get(trackSlug),
       fetchConceptsMd(trackSlug, partSlug),
       api.tracks.getQuiz(trackSlug, partSlug).catch(() => null),
+      api.quizAttempts.listMe(partSlug).then((a) => a[0] ?? null).catch(() => null),
+      api.progress.getPart(partSlug).catch(() => []),
     ])
-      .then(([t, md, q]) => {
+      .then(([t, md, q, attempt, prog]) => {
         setTrack(t);
         setConceptsMd(md);
         setQuiz(q);
+        setLatestAttempt(attempt);
+        setProgress(prog);
       })
       .catch((e: Error) => setError(e.message))
       .finally(() => setLoading(false));
@@ -97,6 +102,11 @@ export default function PartPage() {
               }`}
             >
               {t}
+              {t === 'quiz' && latestAttempt && (
+                <span className={`ml-1.5 text-xs ${latestAttempt.passed ? 'text-green-500' : 'text-red-400'}`}>
+                  {latestAttempt.passed ? '✓' : '✗'}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -128,7 +138,12 @@ export default function PartPage() {
             {part.exercises.length === 0 ? (
               <p className="text-sm text-gray-400">No exercises in this part.</p>
             ) : (
-              <ExerciseList trackSlug={trackSlug!} partSlug={partSlug!} exercises={part.exercises} />
+              <ExerciseList
+                trackSlug={trackSlug!}
+                partSlug={partSlug!}
+                exercises={part.exercises}
+                progress={progress}
+              />
             )}
           </div>
         )}
@@ -137,7 +152,11 @@ export default function PartPage() {
         {tab === 'quiz' && (
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             {quiz ? (
-              <Quiz quiz={quiz} />
+              <Quiz
+                quiz={quiz}
+                quizId={partSlug}
+                latestAttempt={latestAttempt ?? undefined}
+              />
             ) : (
               <p className="text-sm text-gray-400">No quiz for this part.</p>
             )}
@@ -148,9 +167,6 @@ export default function PartPage() {
   );
 }
 
-// Fetch concepts.md via the exercise endpoint workaround: use /api/tracks/:t/parts/:p
-// The concepts content is served through the part's raw file listing on the server.
-// For now we fetch via a dedicated endpoint we'll add to the API.
 async function fetchConceptsMd(trackSlug: string, partSlug: string): Promise<string> {
   const res = await fetch(`/api/tracks/${trackSlug}/parts/${partSlug}/concepts`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
@@ -164,32 +180,53 @@ function ExerciseList({
   trackSlug,
   partSlug,
   exercises,
+  progress,
 }: {
   trackSlug: string;
   partSlug: string;
   exercises: Array<{ slug: string; title: string; order: number }>;
+  progress: ExerciseProgress[];
 }) {
+  const progressMap = new Map(progress.map((p) => [p.exerciseId, p]));
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 divide-y divide-gray-100">
-      {exercises.map((ex) => (
-        <NavLink
-          key={ex.slug}
-          to={`/tracks/${trackSlug}/parts/${partSlug}/exercises/${ex.slug}`}
-          className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors group"
-        >
-          <div className="flex items-center gap-3">
-            <span className="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-mono flex items-center justify-center shrink-0">
-              {ex.order}
-            </span>
-            <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">
-              {ex.title}
-            </span>
-          </div>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-400 font-medium">
-            Not started
-          </span>
-        </NavLink>
-      ))}
+      {exercises.map((ex) => {
+        const prog = progressMap.get(`${partSlug}/${ex.slug}`);
+        return (
+          <NavLink
+            key={ex.slug}
+            to={`/tracks/${trackSlug}/parts/${partSlug}/exercises/${ex.slug}`}
+            className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <span className="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-mono flex items-center justify-center shrink-0">
+                {ex.order}
+              </span>
+              <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">
+                {ex.title}
+              </span>
+            </div>
+            <ExerciseStatusBadge status={prog?.status ?? null} />
+          </NavLink>
+        );
+      })}
     </div>
   );
+}
+
+function ExerciseStatusBadge({ status }: { status: string | null }) {
+  if (status === 'PASSED') {
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Passed</span>;
+  }
+  if (status === 'FAILED') {
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-medium">Failed</span>;
+  }
+  if (status === 'PENDING' || status === 'GRADING') {
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">Grading…</span>;
+  }
+  if (status === 'ERROR') {
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-medium">Error</span>;
+  }
+  return <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-400 font-medium">Not started</span>;
 }

@@ -74,6 +74,21 @@ export interface SubmissionDto {
   gradedAt: string | null;
 }
 
+export interface QuizAttemptDto {
+  id: string;
+  quizId: string;
+  answers: unknown;
+  score: number;
+  passed: boolean;
+  attemptedAt: string;
+}
+
+export interface ExerciseProgress {
+  exerciseId: string;
+  status: string;
+  score: number | null;
+}
+
 export interface ApiError {
   error: string;
   message: string;

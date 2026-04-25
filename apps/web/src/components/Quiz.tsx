@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import type { QuizData } from '@learnstack/shared';
+import { api } from '../lib/api.ts';
 
 interface Props {
   quiz: QuizData;
+  quizId?: string;
+  latestAttempt?: { passed: boolean; score: number } | null;
 }
 
 type Answers = Record<string, string[]>;
 
-export default function Quiz({ quiz }: Props) {
+export default function Quiz({ quiz, quizId, latestAttempt }: Props) {
   const [answers, setAnswers] = useState<Answers>({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState<number | null>(null);
+  const [saving, setSaving] = useState(false);
 
   function toggleAnswer(questionId: string, optionText: string, multiChoice: boolean) {
     setAnswers((prev) => {
@@ -27,7 +31,7 @@ export default function Quiz({ quiz }: Props) {
     });
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     let correct = 0;
     for (const q of quiz.questions) {
       const selected = answers[q.id] ?? [];
@@ -38,8 +42,15 @@ export default function Quiz({ quiz }: Props) {
       if (isCorrect) correct++;
     }
     const pct = correct / quiz.questions.length;
+    const passed = pct >= quiz.pass_threshold;
+
     setScore(pct);
     setSubmitted(true);
+
+    if (quizId) {
+      setSaving(true);
+      api.quizAttempts.create(quizId, answers, pct, passed).finally(() => setSaving(false));
+    }
   }
 
   function handleRetry() {
@@ -55,7 +66,16 @@ export default function Quiz({ quiz }: Props) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">{quiz.title}</h2>
-        <span className="text-xs text-gray-400">Pass threshold: {Math.round(quiz.pass_threshold * 100)}%</span>
+        <div className="flex items-center gap-3">
+          {latestAttempt && !submitted && (
+            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+              latestAttempt.passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}>
+              Last attempt: {Math.round(latestAttempt.score * 100)}% — {latestAttempt.passed ? 'Passed' : 'Failed'}
+            </span>
+          )}
+          <span className="text-xs text-gray-400">Pass threshold: {Math.round(quiz.pass_threshold * 100)}%</span>
+        </div>
       </div>
 
       {quiz.questions.map((q, qi) => {
@@ -124,6 +144,7 @@ export default function Quiz({ quiz }: Props) {
           <p className={`text-sm font-semibold ${passed ? 'text-green-800' : 'text-red-800'}`}>
             {passed ? '✓ Passed' : '✗ Not yet'} — Score: {Math.round(score! * 100)}%
             {' '}({Math.round(score! * quiz.questions.length)}/{quiz.questions.length} correct)
+            {saving && <span className="ml-2 text-xs font-normal opacity-60">Saving…</span>}
           </p>
           {!passed && (
             <button

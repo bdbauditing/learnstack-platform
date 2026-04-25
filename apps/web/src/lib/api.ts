@@ -1,4 +1,7 @@
-import type { AuthResponse, TrackIndex, PartIndex, ExerciseMeta, QuizData, UserDto, SubmissionDto } from '@learnstack/shared';
+import type {
+  AuthResponse, TrackIndex, PartIndex, ExerciseMeta, QuizData, UserDto,
+  SubmissionDto, QuizAttemptDto, ExerciseProgress,
+} from '@learnstack/shared';
 
 const BASE = '/api';
 
@@ -69,5 +72,21 @@ export const api = {
 
     list: (exerciseId: string): Promise<SubmissionDto[]> =>
       request(`/submissions?exerciseId=${encodeURIComponent(exerciseId)}`),
+  },
+
+  quizAttempts: {
+    create: (quizId: string, answers: unknown, score: number, passed: boolean): Promise<QuizAttemptDto> =>
+      request('/quiz-attempts', {
+        method: 'POST',
+        body: JSON.stringify({ quizId, answers, score, passed }),
+      }),
+
+    listMe: (quizId?: string): Promise<QuizAttemptDto[]> =>
+      request(`/quiz-attempts/me${quizId ? `?quizId=${encodeURIComponent(quizId)}` : ''}`),
+  },
+
+  progress: {
+    getPart: (partSlug: string): Promise<ExerciseProgress[]> =>
+      request(`/progress/me?partSlug=${encodeURIComponent(partSlug)}`),
   },
 };
