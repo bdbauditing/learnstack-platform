@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  INSTRUCTOR
+  LEARNER
+}
+
+enum SubmissionStatus {
+  PENDING
+  GRADING
+  PASSED
+  FAILED
+  ERROR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  role         Role     @default(LEARNER)
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  enrollments  Enrollment[]
+  submissions  Submission[]
+  quizAttempts QuizAttempt[]
+}
+
+model Track {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  createdAt DateTime @default(now())
+
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  userId     String
+  trackId    String
+  enrolledAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  track Track @relation(fields: [trackId], references: [id])
+
+  @@unique([userId, trackId])
+}
+
+model Submission {
+  id          String           @id @default(cuid())
+  userId      String
+  exerciseId  String
+  payload     Json
+  status      SubmissionStatus @default(PENDING)
+  score       Float?
+  feedback    Json?
+  submittedAt DateTime         @default(now())
+  gradedAt    DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  quizId      String
+  answers     Json
+  score       Float
+  passed      Boolean
+  attemptedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}

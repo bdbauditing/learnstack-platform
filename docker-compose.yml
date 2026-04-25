@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: learnstack
+      POSTGRES_PASSWORD: learnstack
+      POSTGRES_DB: learnstack
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U learnstack"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgresql://learnstack:learnstack@postgres:5432/learnstack"
+      JWT_SECRET: "dev-jwt-secret-change-in-production"
+      JWT_REFRESH_SECRET: "dev-refresh-secret-change-in-production"
+      PORT: "3001"
+      CONTENT_REPO_PATH: "/content"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../learnstack-qa-track:/content:ro
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "5174:80"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
