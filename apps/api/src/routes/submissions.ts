@@ -6,6 +6,18 @@ import { runGrader } from '../lib/grader-runner.js';
 const router = Router();
 const prisma = new PrismaClient();
 
+const ALLOW_LOCAL = process.env.ALLOW_LOCAL_FORK_PATHS === 'true';
+const GITHUB_URL_RE = /^https?:\/\/github\.com\/.+/;
+
+function validateForkUrl(url: string): string | null {
+  if (GITHUB_URL_RE.test(url)) return null;
+  const isLocal = url.startsWith('/') || url.startsWith('file://');
+  if (ALLOW_LOCAL && isLocal) return null;
+  return ALLOW_LOCAL
+    ? 'forkUrl must be a github.com URL or an absolute local path (ALLOW_LOCAL_FORK_PATHS=true)'
+    : 'forkUrl must be a github.com HTTPS URL (e.g. https://github.com/you/learnstack-qa-track)';
+}
+
 router.use(requireAuth);
 
 // POST /api/submissions
@@ -15,6 +27,12 @@ router.post('/', async (req, res) => {
 
   if (!exerciseId || !forkUrl) {
     res.status(400).json({ error: 'Bad Request', message: 'exerciseId and forkUrl are required' });
+    return;
+  }
+
+  const urlError = validateForkUrl(forkUrl);
+  if (urlError) {
+    res.status(400).json({ error: 'Bad Request', message: urlError });
     return;
   }
 

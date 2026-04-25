@@ -27,6 +27,7 @@ services:
       JWT_REFRESH_SECRET: "dev-refresh-secret-change-in-production"
       PORT: "3001"
       CONTENT_REPO_PATH: "/content"
+      ALLOW_LOCAL_FORK_PATHS: "true"
     depends_on:
       postgres:
         condition: service_healthy
