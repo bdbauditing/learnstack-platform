@@ -1,6 +1,11 @@
 import { Router } from 'express';
+import fs from 'fs';
+import path from 'path';
 import { requireAuth } from '../middleware/auth.js';
 import { getTrack, getPart, getExercise, getQuiz } from '../lib/content-loader.js';
+
+const CONTENT_ROOT = process.env.CONTENT_REPO_PATH ?? path.resolve(__dirname, '../../../../learnstack-qa-track');
+const CONTENT_DIR = path.join(CONTENT_ROOT, 'content');
 
 const router = Router();
 
@@ -49,6 +54,16 @@ router.get('/:trackSlug/parts/:partSlug/exercises/:exerciseSlug', (req, res) => 
     return;
   }
   res.json(exercise);
+});
+
+// GET /api/tracks/:trackSlug/parts/:partSlug/concepts
+router.get('/:trackSlug/parts/:partSlug/concepts', (req, res) => {
+  const conceptsPath = path.join(CONTENT_DIR, req.params.partSlug, 'concepts.md');
+  if (!fs.existsSync(conceptsPath)) {
+    res.json({ content: '' });
+    return;
+  }
+  res.json({ content: fs.readFileSync(conceptsPath, 'utf8') });
 });
 
 // GET /api/tracks/:trackSlug/parts/:partSlug/quiz

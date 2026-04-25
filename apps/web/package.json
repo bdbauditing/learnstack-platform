@@ -2,6 +2,7 @@
   "name": "@learnstack/web",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,9 +11,15 @@
   },
   "dependencies": {
     "@learnstack/shared": "*",
+    "@tailwindcss/typography": "^0.5.19",
+    "highlight.js": "^11.11.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.23.1"
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^6.23.1",
+    "rehype-highlight": "^7.0.2",
+    "rehype-sanitize": "^6.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
@@ -22,7 +29,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
-    "vitest": "^1.6.0",
-    "vite": "^6.0.0"
+    "vite": "^6.0.0",
+    "vitest": "^1.6.0"
   }
 }
