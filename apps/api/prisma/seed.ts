@@ -8,10 +8,10 @@ async function main() {
 
   // Users
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@learnstack.io' },
+    where: { email: 'admin@learnstack.local' },
     update: {},
     create: {
-      email: 'admin@learnstack.io',
+      email: 'admin@learnstack.local',
       name: 'Admin',
       role: Role.ADMIN,
       passwordHash: hash('Admin1234!'),
@@ -20,30 +20,30 @@ async function main() {
 
   const learners = await Promise.all([
     prisma.user.upsert({
-      where: { email: 'alice@learnstack.io' },
+      where: { email: 'alice@learnstack.local' },
       update: {},
       create: {
-        email: 'alice@learnstack.io',
+        email: 'alice@learnstack.local',
         name: 'Alice Chen',
         role: Role.LEARNER,
         passwordHash: hash('Password1!'),
       },
     }),
     prisma.user.upsert({
-      where: { email: 'bob@learnstack.io' },
+      where: { email: 'bob@learnstack.local' },
       update: {},
       create: {
-        email: 'bob@learnstack.io',
+        email: 'bob@learnstack.local',
         name: 'Bob Patel',
         role: Role.LEARNER,
         passwordHash: hash('Password1!'),
       },
     }),
     prisma.user.upsert({
-      where: { email: 'charlie@learnstack.io' },
+      where: { email: 'charlie@learnstack.local' },
       update: {},
       create: {
-        email: 'charlie@learnstack.io',
+        email: 'charlie@learnstack.local',
         name: 'Charlie Kim',
         role: Role.LEARNER,
         passwordHash: hash('Password1!'),
@@ -71,8 +71,8 @@ async function main() {
   }
 
   console.log('Seed complete.');
-  console.log(`  Admin:    admin@learnstack.io / Admin1234!`);
-  console.log(`  Learners: alice / bob / charlie @learnstack.io / Password1!`);
+  console.log(`  Admin:    admin@learnstack.local / Admin1234!`);
+  console.log(`  Learners: alice / bob / charlie @learnstack.local / Password1!`);
   console.log(`  Track:    ${track.slug}`);
   console.log(`  Enrollments: ${learners.length}`);
   console.log(`  Users total: ${1 + learners.length} (admin + ${learners.length} learners)`);
