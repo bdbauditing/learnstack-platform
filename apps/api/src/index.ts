@@ -5,6 +5,7 @@ import tracksRouter from './routes/tracks.js';
 import submissionsRouter from './routes/submissions.js';
 import quizAttemptsRouter from './routes/quiz-attempts.js';
 import progressRouter from './routes/progress.js';
+import adminRouter from './routes/admin.js';
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
@@ -21,6 +22,7 @@ app.use('/api/tracks', tracksRouter);
 app.use('/api/submissions', submissionsRouter);
 app.use('/api/quiz-attempts', quizAttemptsRouter);
 app.use('/api/progress', progressRouter);
+app.use('/api/admin', adminRouter);
 
 app.use((_req, res) => {
   res.status(404).json({ error: 'Not Found', message: 'No such route' });

@@ -1,6 +1,7 @@
 import type {
   AuthResponse, TrackIndex, PartIndex, ExerciseMeta, QuizData, UserDto,
-  SubmissionDto, QuizAttemptDto, ExerciseProgress,
+  SubmissionDto, QuizAttemptDto, ExerciseProgress, TrackProgress,
+  AdminUserDto, AdminSubmissionDto,
 } from '@learnstack/shared';
 
 const BASE = '/api';
@@ -88,5 +89,38 @@ export const api = {
   progress: {
     getPart: (partSlug: string): Promise<ExerciseProgress[]> =>
       request(`/progress/me?partSlug=${encodeURIComponent(partSlug)}`),
+
+    getFullTrack: (): Promise<TrackProgress> =>
+      request('/progress/me'),
+  },
+
+  admin: {
+    listUsers: (page = 1, limit = 20): Promise<{ users: AdminUserDto[]; total: number }> =>
+      request(`/admin/users?page=${page}&limit=${limit}`),
+
+    createUser: (email: string, name: string, password: string, role = 'LEARNER'): Promise<AdminUserDto> =>
+      request('/admin/users', {
+        method: 'POST',
+        body: JSON.stringify({ email, name, password, role }),
+      }),
+
+    getUserProgress: (userId: string): Promise<TrackProgress> =>
+      request(`/admin/users/${userId}/progress`),
+
+    listSubmissions: (params: {
+      userId?: string;
+      exerciseId?: string;
+      status?: string;
+      page?: number;
+      limit?: number;
+    }): Promise<{ submissions: AdminSubmissionDto[]; total: number }> => {
+      const q = new URLSearchParams();
+      if (params.userId) q.set('userId', params.userId);
+      if (params.exerciseId) q.set('exerciseId', params.exerciseId);
+      if (params.status) q.set('status', params.status);
+      q.set('page', String(params.page ?? 1));
+      q.set('limit', String(params.limit ?? 20));
+      return request(`/admin/submissions?${q.toString()}`);
+    },
   },
 };

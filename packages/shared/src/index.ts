@@ -89,6 +89,54 @@ export interface ExerciseProgress {
   score: number | null;
 }
 
+export interface ExerciseProgressDetail {
+  slug: string;
+  title: string;
+  order: number;
+  status: SubmissionStatus | null;
+  score: number | null;
+}
+
+export interface PartProgress {
+  slug: string;
+  title: string;
+  order: number;
+  quizStatus: 'PASSED' | 'FAILED' | 'NOT_ATTEMPTED';
+  quizScore: number | null;
+  exercises: ExerciseProgressDetail[];
+}
+
+export interface TrackProgress {
+  totalItems: number;
+  completedItems: number;
+  parts: PartProgress[];
+}
+
+export interface AdminUserDto {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
+  createdAt: string;
+  lastActivityAt: string | null;
+  submissionCount: number;
+}
+
+export interface AdminSubmissionDto {
+  id: string;
+  userId: string;
+  userEmail: string;
+  userName: string;
+  exerciseId: string;
+  forkUrl: string;
+  commitSha: string | null;
+  status: SubmissionStatus;
+  score: number | null;
+  graderOutput: unknown;
+  submittedAt: string;
+  gradedAt: string | null;
+}
+
 export interface ApiError {
   error: string;
   message: string;
