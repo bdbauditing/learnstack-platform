@@ -1,10 +1,3 @@
-databases:
-  - name: learnstack-platform-db
-    databaseName: learnstack
-    user: learnstack
-    plan: free
-    # Free tier expires after 90 days. Upgrade to Starter ($7/mo) for persistence.
-
 services:
   - type: web
     name: learnstack-platform-api
@@ -17,9 +10,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: learnstack-platform-db
-          property: connectionString
+        # Paste your Neon (or other) Postgres connection string here after deploy.
+        # See DEPLOYMENT-RENDER.md Step 0 for instructions.
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_REFRESH_SECRET

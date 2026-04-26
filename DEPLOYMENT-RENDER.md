@@ -1,12 +1,14 @@
 # Deployment — LearnStack Platform on Render
 
-Two web services + one Postgres database:
+Two web services + external Postgres:
 
 | Resource | Name | URL |
 |----------|------|-----|
 | API | `learnstack-platform-api` | https://learnstack-platform-api.onrender.com |
 | Web | `learnstack-platform-web` | https://learnstack-platform-web.onrender.com |
-| Postgres | `learnstack-platform-db` | injected as `DATABASE_URL` |
+| Postgres | Neon free tier | set manually as `DATABASE_URL` |
+
+> **Why external Postgres?** Render allows only one free-tier database per account. Since `taskforge-postgres` already occupies that slot, LearnStack uses [Neon](https://neon.tech) — a free serverless Postgres with no expiry.
 
 QA track content (exercises, quizzes, specs) is baked into the API image at build time — no separate content server needed.
 
@@ -18,10 +20,19 @@ The web service's nginx proxies `/api/` to the API over HTTPS. No ports are hard
 
 - A [Render account](https://render.com) (GitHub sign-in recommended)
 - The `learnstack-platform` repo pushed to GitHub (public or connected private)
+- A [Neon account](https://neon.tech) (free, GitHub sign-in works)
 
 ---
 
 ## First deploy (Blueprint)
+
+### Step 0 — Create a Neon database
+
+1. Sign in at [console.neon.tech](https://console.neon.tech)
+2. Click **New project** → name it `learnstack-platform` → **Create project**
+3. Copy the **Connection string** from the dashboard — it looks like:
+   `postgresql://user:password@ep-xxx.us-east-2.aws.neon.tech/neondb?sslmode=require`
+4. Keep this string handy — you'll paste it into Render in Step 3.
 
 ### Step 1 — Connect repo to Render
 
@@ -32,7 +43,7 @@ The web service's nginx proxies `/api/` to the API over HTTPS. No ports are hard
 
 ### Step 2 — Review and apply
 
-Render shows the 3 resources it will create (2 web services + 1 database). Accept all. The `JWT_SECRET` and `JWT_REFRESH_SECRET` are auto-generated random values.
+Render shows 2 web services to create. The `JWT_SECRET` and `JWT_REFRESH_SECRET` are auto-generated. The `DATABASE_URL` is left blank — you'll set it in Step 3.
 
 Click **Apply** and wait. First build takes **10–15 minutes** (Docker layer caching kicks in on subsequent deploys).
 
@@ -45,6 +56,16 @@ After deploy completes, go to each service in the dashboard and copy the URL:
 
 > **If Render added a random suffix** (e.g. `learnstack-platform-api-xyzw.onrender.com`), update the `API_URL` env var on the web service (Step 4).
 
+### Step 3 — Set DATABASE_URL
+
+The API won't start until `DATABASE_URL` is set (it needs to run `prisma db push` on startup).
+
+1. In Render dashboard → **learnstack-platform-api** → **Environment**
+2. Set `DATABASE_URL` to the Neon connection string from Step 0
+3. Click **Save changes** — Render triggers an automatic redeploy
+
+Wait for the API to go green (health check passes) before proceeding.
+
 ### Step 4 — Wire up API_URL (if URL has a suffix)
 
 1. In Render dashboard → **learnstack-platform-web** → **Environment**
@@ -53,15 +74,10 @@ After deploy completes, go to each service in the dashboard and copy the URL:
 
 ### Step 5 — Seed the database
 
-Render's shell requires a paid plan. Seed from your local machine using the **external database URL**.
-
-1. In Render dashboard → **learnstack-platform-db** → copy **External Database URL**
-   (looks like `postgres://learnstack:<password>@<host>.render.com/learnstack`)
-
-2. Run from the `learnstack-platform/` directory on your machine:
+Run from the `learnstack-platform/` directory on your machine using the Neon connection string:
 
 ```bash
-DATABASE_URL="<paste-external-url-here>" npm run seed --workspace=apps/api
+DATABASE_URL="<your-neon-connection-string>" npm run seed --workspace=apps/api
 ```
 
 Expected output:
