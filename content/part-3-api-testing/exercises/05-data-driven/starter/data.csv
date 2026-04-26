@@ -1,0 +1,11 @@
+email,password,expected_status,scenario
+alice@taskforge.io,Password1!,200,valid-credentials
+bob@taskforge.io,Secure#99,200,valid-credentials
+carol@taskforge.io,MyPass$42,200,valid-credentials
+dave@taskforge.io,Hunter2!x,200,valid-credentials
+eve@taskforge.io,Qwerty@7,200,valid-credentials
+frank@taskforge.io,Zap!12345,200,valid-credentials
+alice@taskforge.io,wrongpassword,401,wrong-password
+,Password1!,400,missing-email
+' OR '1'='1' --,anypassword,400,sql-injection-payload
+expired@taskforge.io,Expired#1,401,expired-account

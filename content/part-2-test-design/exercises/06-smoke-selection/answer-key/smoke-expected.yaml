@@ -1,0 +1,20 @@
+# STAFF ONLY — used by set-overlap-match grader
+# Membership matters; order does not.
+
+expected_ids:
+  - TC-001
+  - TC-003
+  - TC-005
+  - TC-006
+  - TC-010
+
+pass_threshold: 4
+
+# Rationale:
+# TC-001: can users log in? (critical gate)
+# TC-003: homepage loads without JS errors (basic health)
+# TC-005: add to cart (core e-commerce path)
+# TC-006: checkout end-to-end (can users buy?)
+# TC-010: API health check (is the backend up?)
+#
+# Acceptable alternates: TC-004 for TC-003; TC-007 or TC-016 for TC-005.

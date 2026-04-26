@@ -1,0 +1,25 @@
+requirements:
+  - id: REQ-001
+    description: "User can log in with valid credentials"
+  - id: REQ-002
+    description: "Login fails with invalid password"
+  - id: REQ-003
+    description: "User can register with a new email"
+  - id: REQ-004
+    description: "Duplicate email registration is rejected"
+  - id: REQ-005
+    description: "User can add items to cart"
+  - id: REQ-006
+    description: "Cart total updates on quantity change"
+  - id: REQ-007
+    description: "Checkout validates payment card"
+  - id: REQ-008
+    description: "Checkout requires a valid shipping address"
+  - id: REQ-009
+    description: "Order confirmation email is sent after purchase"
+  - id: REQ-010
+    description: "User can update their profile information"
+  - id: REQ-011
+    description: "Search returns results relevant to the query"
+  - id: REQ-012
+    description: "Admin can create, deactivate, and export users"

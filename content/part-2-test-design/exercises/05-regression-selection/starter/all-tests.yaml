@@ -1,0 +1,93 @@
+# All 30 test cases — read these, then fill in regression-selection.yaml
+
+tests:
+  - id: TC-001
+    title: "Login with valid credentials"
+    area: authentication
+  - id: TC-002
+    title: "Login with invalid password"
+    area: authentication
+  - id: TC-003
+    title: "Registration happy path"
+    area: authentication
+  - id: TC-004
+    title: "Registration with duplicate email"
+    area: authentication
+  - id: TC-005
+    title: "Add item to cart"
+    area: checkout
+  - id: TC-006
+    title: "Apply valid coupon code"
+    area: checkout
+  - id: TC-007
+    title: "Apply invalid coupon code"
+    area: checkout
+  - id: TC-008
+    title: "Card number validation"
+    area: checkout
+  - id: TC-009
+    title: "Expired card rejection"
+    area: checkout
+  - id: TC-010
+    title: "Empty cart guard"
+    area: checkout
+  - id: TC-011
+    title: "Order confirmation received"
+    area: checkout
+  - id: TC-012
+    title: "Update display name"
+    area: profile
+  - id: TC-013
+    title: "Upload avatar (new feature)"
+    area: profile
+  - id: TC-014
+    title: "Change email with re-verification (new behavior)"
+    area: profile
+  - id: TC-015
+    title: "Change password"
+    area: profile
+  - id: TC-016
+    title: "Find products by keyword"
+    area: search
+  - id: TC-017
+    title: "Empty search results state"
+    area: search
+  - id: TC-018
+    title: "Increase item quantity in cart"
+    area: cart
+  - id: TC-019
+    title: "Remove item from cart"
+    area: cart
+  - id: TC-020
+    title: "Cart price recalculation"
+    area: cart
+  - id: TC-021
+    title: "Admin: create user"
+    area: admin
+  - id: TC-022
+    title: "Admin: deactivate user"
+    area: admin
+  - id: TC-023
+    title: "Admin: export report"
+    area: admin
+  - id: TC-024
+    title: "Notifications: email on order"
+    area: notifications
+  - id: TC-025
+    title: "Notifications: email on password change"
+    area: notifications
+  - id: TC-026
+    title: "API: GET /products"
+    area: api
+  - id: TC-027
+    title: "API: POST /orders"
+    area: api
+  - id: TC-028
+    title: "API: auth token expiry"
+    area: api
+  - id: TC-029
+    title: "Dashboard load time < 3s"
+    area: performance
+  - id: TC-030
+    title: "Accessibility: homepage scan"
+    area: accessibility

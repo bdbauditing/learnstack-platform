@@ -1,0 +1,33 @@
+# Select test cases for the release regression suite.
+# smoke: 15 cases for the smoke suite (run before every deploy)
+# regression: 5 additional cases for full regression (run weekly)
+#
+# Use TC-IDs from your test-cases.yaml in Exercise 04.
+
+smoke_suite:
+  selected_tests:
+    - id: ""  # TC-XXX
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+  rationale: ""  # why these 15 tests form a good smoke suite
+
+regression_additions:
+  selected_tests:
+    - id: ""  # TC-XXX
+    - id: ""
+    - id: ""
+    - id: ""
+    - id: ""
+  rationale: ""  # what additional coverage these 5 tests provide

@@ -1,0 +1,25 @@
+defects:
+  - id: DEF-001
+    title: "Login button disabled with valid credentials"
+    area: login
+  - id: DEF-002
+    title: "Duplicate email registration shows 500 error"
+    area: registration
+  - id: DEF-003
+    title: "Cart total does not update on quantity change"
+    area: cart
+  - id: DEF-004
+    title: "Card number field accepts alphabetic characters"
+    area: checkout
+  - id: DEF-005
+    title: "Coupon code applies 100% discount instead of configured amount"
+    area: checkout
+  - id: DEF-006
+    title: "Empty cart can proceed to checkout"
+    area: checkout
+  - id: DEF-007
+    title: "Profile bio does not save on Update click"
+    area: profile
+  - id: DEF-008
+    title: "Search results contain items from wrong category"
+    area: search

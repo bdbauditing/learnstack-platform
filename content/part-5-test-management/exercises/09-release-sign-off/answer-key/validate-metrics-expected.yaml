@@ -1,0 +1,7 @@
+# Expected metric values (for staff reference)
+defect_density: 1.5
+pass_rate_pct: 86.7
+escape_rate_pct: 11.1
+avg_bug_age_days: 10.7
+mttr_days: 10.7
+tolerance_pct: 15

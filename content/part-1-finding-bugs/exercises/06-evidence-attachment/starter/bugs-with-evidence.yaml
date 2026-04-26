@@ -1,0 +1,73 @@
+# Add evidence to each of these 3 bug reports.
+# screenshot, console, and network are all required.
+
+bugs:
+  - title: "[Login] Submit button disabled with valid credentials"
+    location: "login/form"
+    severity: High
+    priority: High
+    environment:
+      browser: Chrome 130
+      os: macOS 14
+      viewport: 1440x900
+      url: "TODO: actual buggy app URL/login"
+    steps:
+      - action: navigate
+        url: "/login"
+      - action: type
+        selector: '[data-test="email"]'
+        value: "user@example.com"
+      - action: type
+        selector: '[data-test="password"]'
+        value: "correctpassword"
+    expected: "Submit button is enabled after filling both fields"
+    actual: "Submit button remains disabled and cannot be clicked"
+    evidence:
+      screenshot: ""
+      console: ""
+      network: ""
+
+  - title: "[Cart] Total price not updating on quantity change"
+    location: "cart/total"
+    severity: High
+    priority: High
+    environment:
+      browser: Firefox 130
+      os: Windows 11
+      viewport: 1920x1080
+      url: "TODO: actual buggy app URL/cart"
+    steps:
+      - action: navigate
+        url: "/cart"
+      - action: click
+        selector: '[data-test="qty-increase"]'
+    expected: "Total updates to new quantity × unit price"
+    actual: "Total stays at original amount"
+    evidence:
+      screenshot: ""
+      console: ""
+      network: ""
+
+  - title: "[Registration] 500 error on duplicate email submission"
+    location: "registration/form"
+    severity: High
+    priority: Medium
+    environment:
+      browser: Chrome 130
+      os: macOS 14
+      viewport: 1440x900
+      url: "TODO: actual buggy app URL/register"
+    steps:
+      - action: navigate
+        url: "/register"
+      - action: type
+        selector: '[data-test="email"]'
+        value: "existing@example.com"
+      - action: click
+        selector: '[data-test="submit"]'
+    expected: "User-friendly error: Email already registered"
+    actual: "White screen with 500 Internal Server Error"
+    evidence:
+      screenshot: ""
+      console: ""
+      network: ""

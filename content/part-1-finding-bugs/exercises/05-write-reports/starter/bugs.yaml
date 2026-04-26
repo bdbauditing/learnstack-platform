@@ -1,0 +1,18 @@
+# Write one complete bug report per description.
+# 5 entries required. All must pass structural validation.
+
+bugs:
+  - title: ""
+    location: ""
+    severity: ""
+    priority: ""
+    environment:
+      browser: ""
+      os: ""
+      viewport: ""
+      url: ""
+    steps:
+      - action: navigate
+        url: ""
+    expected: ""
+    actual: ""

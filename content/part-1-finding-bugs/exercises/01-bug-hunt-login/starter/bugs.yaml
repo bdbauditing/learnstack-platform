@@ -1,0 +1,19 @@
+# Fill in your bug reports below.
+# Add one entry per bug found. You need at least 3.
+# See README.md for the full format.
+
+bugs:
+  - title: ""
+    location: ""
+    severity: ""
+    priority: ""
+    environment:
+      browser: ""
+      os: ""
+      viewport: ""
+      url: ""
+    steps:
+      - action: navigate
+        url: ""
+    expected: ""
+    actual: ""

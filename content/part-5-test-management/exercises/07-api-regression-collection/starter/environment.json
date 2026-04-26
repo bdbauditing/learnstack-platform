@@ -1,0 +1,25 @@
+{
+  "id": "taskforge-2-env",
+  "name": "TaskForge 2.0 Staging",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "TODO: <hostname>",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testUserEmail",
+      "value": "TODO: test user email",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testUserPassword",
+      "value": "TODO: test user password",
+      "type": "secret",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

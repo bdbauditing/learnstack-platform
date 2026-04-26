@@ -1,0 +1,5 @@
+Condition,Rule 1,Rule 2,Rule 3,Rule 4
+Order >= $50,Y,Y,N,N
+Member,Y,N,Y,N
+Shipping cost,$0,$10,$5,$10
+Order accepted?,Yes,Yes,Yes,Yes

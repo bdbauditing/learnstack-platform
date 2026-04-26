@@ -1,0 +1,58 @@
+test_cases:
+  - id: TC-001
+    title: "Login with valid credentials"
+    description: "User enters correct email and password and is redirected to dashboard"
+    steps:
+      - action: navigate
+        url: "TODO:/login"
+      - action: fill
+        selector: "#email"
+        value: "user@taskforge.example.com"
+      - action: fill
+        selector: "#password"
+        value: "password123"
+      - action: click
+        selector: "[type=submit]"
+      - action: assert_visible
+        selector: ".dashboard-heading"
+    expected_result: "User is redirected to the dashboard and the heading is visible"
+    priority: High
+    area: Authentication
+
+  - id: TC-002
+    title: "Create task with valid title"
+    description: "Submitting a task form with a valid title saves the task"
+    steps:
+      - action: navigate
+        url: "TODO:/tasks/new"
+      - action: fill
+        selector: "#task-title"
+        value: "Buy milk"
+      - action: click
+        selector: "#save-task"
+      - action: assert_visible
+        selector: ".task-list-item"
+    expected_result: "New task appears in the task list"
+    priority: High
+    area: Task Management
+
+  - id: TC-003
+    title: "Search for existing task by title"
+    description: "Searching for a known task title returns that task in results"
+    steps:
+      - action: navigate
+        url: "TODO:/tasks"
+      - action: fill
+        selector: "#search-input"
+        value: "Buy milk"
+      - action: assert_visible
+        selector: ".search-results .task-item"
+    expected_result: "Search results contain the task"
+    priority: Medium
+    area: Search
+
+  # Add more test cases below. You need at least 40 total.
+  # Cover these areas: Authentication, Task Management (CRUD),
+  # Task Validation (boundary values, empty fields, max lengths),
+  # Workflow (assign, complete, reopen, bulk ops), Notifications,
+  # Search, File Attachments, API Validation, Accessibility, Security.

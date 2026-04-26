@@ -1,0 +1,21 @@
+# Write your test cases here.
+# Aim for 8+ cases covering positive and negative paths.
+
+test_cases:
+  - id: TC-001
+    title: "Verify that login succeeds with valid email and password"
+    preconditions:
+      - "User account exists"
+    steps:
+      - action: navigate
+        url: "/login"
+      - action: type
+        selector: '[data-test="email"]'
+        value: "user@example.com"
+      - action: type
+        selector: '[data-test="password"]'
+        value: "correct-password"
+      - action: click
+        selector: '[data-test="submit"]'
+    expected: "User is redirected to /dashboard"
+    priority: High

@@ -23,6 +23,14 @@ RUN npm install --workspaces
 WORKDIR /app/apps/web
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:alpine AS runner
 COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
+COPY apps/web/nginx.conf.template /etc/nginx/nginx.conf.template
+COPY apps/web/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+# Defaults for local docker-compose; Render overrides PORT=10000 at runtime
+ENV PORT=80
+ENV API_URL=http://api:3001
+# EXPOSE documents the default local port; Render routes via $PORT
 EXPOSE 80
+ENTRYPOINT ["/docker-entrypoint.sh"]

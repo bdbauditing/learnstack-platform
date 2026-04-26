@@ -1,0 +1,17 @@
+# Find 5 bugs on the registration page. You need 4 to pass.
+
+bugs:
+  - title: ""
+    location: ""
+    severity: ""
+    priority: ""
+    environment:
+      browser: ""
+      os: ""
+      viewport: ""
+      url: ""
+    steps:
+      - action: navigate
+        url: ""
+    expected: ""
+    actual: ""

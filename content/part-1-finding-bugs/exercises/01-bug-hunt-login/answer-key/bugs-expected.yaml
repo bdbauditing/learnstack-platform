@@ -1,0 +1,48 @@
+# STAFF ONLY — do not distribute to learners.
+
+bugs:
+  - id: BUG-001
+    description: "Submit button stays disabled with valid credentials"
+    location: "login/form"
+    severity: High
+    priority: High
+    signatureKeywords:
+      - "button"
+      - "disabled"
+      - "login"
+    keywordThreshold: 0.6
+
+  - id: BUG-002
+    description: "Password field shows plain text"
+    location: "login/password"
+    severity: Medium
+    priority: Medium
+    signatureKeywords:
+      - "password"
+      - "plain"
+      - "visible"
+    keywordThreshold: 0.5
+
+  - id: BUG-003
+    description: "Forgot password link goes to 404"
+    location: "login/forgot-password"
+    severity: Low
+    priority: Medium
+    signatureKeywords:
+      - "forgot"
+      - "password"
+      - "link"
+    keywordThreshold: 0.6
+
+  - id: BUG-004
+    description: "Wrong error message enables username enumeration"
+    location: "login"
+    severity: Medium
+    priority: High
+    signatureKeywords:
+      - "error"
+      - "message"
+      - "username"
+    keywordThreshold: 0.5
+
+passThreshold: 3

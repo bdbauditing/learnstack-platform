@@ -1,0 +1,139 @@
+bugs:
+  - id: BUG-001
+    title: "Task due date field accepts dates in the past without displaying any warning"
+    location: "task-form / due-date input"
+    severity: Medium
+    priority: High
+    environment:
+      browser: "Chrome 124"
+      os: "macOS 14"
+      viewport: "1440x900"
+      url: "https://TODO:<hostname>/tasks/new"
+    steps:
+      - action: navigate
+        url: "https://TODO:<hostname>/tasks/new"
+      - action: click
+        selector: "#due-date-input"
+      - action: type
+        selector: "#due-date-input"
+        value: "2020-01-01"
+      - action: click
+        selector: "#save-task"
+      - action: assert_visible
+        selector: ".task-list-item"
+    expected: "A warning message appears informing the user that the selected due date is in the past. The user must confirm or correct the date before the task can be saved."
+    actual: "The task is saved without any warning. The past due date is accepted silently and the task appears in the list marked as overdue immediately."
+    keywords: ["due date", "past", "warning", "validation"]
+
+  - id: BUG-002
+    title: "File attachment upload silently fails for files over 10MB with no user feedback"
+    location: "task-form / file attachment"
+    severity: High
+    priority: High
+    environment:
+      browser: "Chrome 124"
+      os: "macOS 14"
+      viewport: "1440x900"
+      url: "https://TODO:<hostname>/tasks/new"
+    steps:
+      - action: navigate
+        url: "https://TODO:<hostname>/tasks/new"
+      - action: click
+        selector: "#attachment-upload-button"
+      - action: type
+        selector: "#attachment-input"
+        value: "large-file-15mb.pdf"
+      - action: click
+        selector: "#save-task"
+      - action: assert_visible
+        selector: ".task-detail"
+    expected: "An error message is shown when the selected file exceeds the maximum size limit. The upload is rejected and the user is informed of the size constraint."
+    actual: "The upload appears to succeed — no error is shown and the save button completes. However, no attachment link appears on the saved task. The failure is silent."
+    keywords: ["attachment", "upload", "10mb", "silent", "fail"]
+
+  - id: BUG-003
+    title: "Email notification is not sent to assignee when a task is assigned to them"
+    location: "notifications / task assignment"
+    severity: High
+    priority: High
+    environment:
+      browser: "Chrome 124"
+      os: "macOS 14"
+      viewport: "1440x900"
+      url: "https://TODO:<hostname>/tasks/new"
+    steps:
+      - action: navigate
+        url: "https://TODO:<hostname>/tasks/new"
+      - action: type
+        selector: "#task-title"
+        value: "Test notification task"
+      - action: select
+        selector: "#assignee-dropdown"
+        value: "test-user-2@taskforge.example.com"
+      - action: click
+        selector: "#save-task"
+    expected: "The assigned user receives an email notification containing the task title and a link to the task within a reasonable delivery window."
+    actual: "No email notification is sent to the assigned user. The assignment is saved correctly in the UI but the notification system does not trigger."
+    keywords: ["email", "notification", "assign", "not sent"]
+
+  - id: BUG-004
+    title: "Search results include tasks from other users private projects that the current user cannot access"
+    location: "search / task search"
+    severity: Critical
+    priority: High
+    environment:
+      browser: "Chrome 124"
+      os: "macOS 14"
+      viewport: "1440x900"
+      url: "https://TODO:<hostname>/tasks"
+    steps:
+      - action: navigate
+        url: "https://TODO:<hostname>/tasks"
+      - action: type
+        selector: "#search-input"
+        value: "confidential-keyword"
+      - action: assert_visible
+        selector: ".search-results"
+    expected: "Search results show only tasks from projects the current user has been granted access to. Tasks in private projects belonging to other users are never returned."
+    actual: "Search results include tasks from other users private projects that the current user has not been assigned to. Private task titles and details are exposed through the search endpoint."
+    keywords: ["search", "private", "other user", "leak"]
+
+  - id: BUG-005
+    title: "Bulk delete Select All checkbox includes completed tasks that should be excluded"
+    location: "task-list / bulk operations"
+    severity: Medium
+    priority: Medium
+    environment:
+      browser: "Chrome 124"
+      os: "macOS 14"
+      viewport: "1440x900"
+      url: "https://TODO:<hostname>/tasks"
+    steps:
+      - action: navigate
+        url: "https://TODO:<hostname>/tasks"
+      - action: click
+        selector: "#select-all-checkbox"
+      - action: assert_visible
+        selector: ".delete-selected-button"
+    expected: "The Select All checkbox selects only active tasks. Completed tasks are either excluded from selection or the UI makes it clear that completed tasks are also selected so the user can deselect them."
+    actual: "The Select All checkbox selects all tasks including completed ones. Clicking Delete Selected will delete completed tasks along with active tasks. No warning or distinction is shown. This can result in unintended permanent deletion of completed task history."
+    keywords: ["bulk", "delete", "completed", "checkbox", "unintended"]
+
+  - id: BUG-006
+    title: "API key management page is accessible without re-authentication allowing unauthorized key exposure"
+    location: "account settings / api keys"
+    severity: Critical
+    priority: High
+    environment:
+      browser: "Chrome 124"
+      os: "macOS 14"
+      viewport: "1440x900"
+      url: "https://TODO:<hostname>/account/api-keys"
+    steps:
+      - action: navigate
+        url: "https://TODO:<hostname>/account/api-keys"
+      - action: assert_visible
+        selector: ".api-key-list"
+    expected: "Navigating to the API Keys page requires the user to re-enter their password before any existing API keys are displayed. This prevents an attacker with access to an unlocked session from exfiltrating API credentials."
+    actual: "The API Keys page loads and displays existing API keys without prompting for re-authentication. Any person with access to an active browser session can view all API keys."
+    keywords: ["api key", "re-authentication", "sensitive", "bypass"]

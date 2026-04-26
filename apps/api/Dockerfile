@@ -24,7 +24,7 @@ RUN npm run build --workspace=apps/api
 
 FROM node:20-slim
 
-RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y openssl git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -34,6 +34,11 @@ COPY --from=builder /app/apps/api/dist ./apps/api/dist
 COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
 COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
 COPY package.json ./
+
+# Bake QA track content into the image
+COPY content /app/content
+
+ENV CONTENT_REPO_PATH=/app
 
 WORKDIR /app/apps/api
 
