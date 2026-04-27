@@ -1,0 +1,143 @@
+quiz:
+  title: "Part 2 Knowledge Check — Test Design Techniques"
+  pass_threshold: 0.7
+  questions:
+    - id: Q1
+      type: single_choice
+      question: "A sign-up form accepts ages 13–99. Using equivalence partitioning, which THREE values should you test?"
+      options:
+        - text: "12, 50, 100"
+          correct: true
+        - text: "13, 14, 15"
+          correct: false
+        - text: "50, 51, 52"
+          correct: false
+        - text: "13, 99, 100"
+          correct: false
+      explanation: "You need one value from each partition: below-minimum (12 = invalid), valid range (50), and above-maximum (100 = invalid). Testing 13, 14, 15 tests the same valid partition three times — wasted effort."
+
+    - id: Q2
+      type: single_choice
+      question: "Boundary Value Analysis says bugs cluster at partition edges. For an age field accepting 18–65, which value is MOST likely to reveal a bug?"
+      options:
+        - text: "25"
+          correct: false
+        - text: "17"
+          correct: true
+        - text: "40"
+          correct: false
+        - text: "55"
+          correct: false
+      explanation: "17 is the boundary just outside the valid range. Off-by-one errors (where the developer writes >18 instead of >=18) are revealed by the values just outside the boundary, not the middle of the valid range."
+
+    - id: Q3
+      type: single_choice
+      question: "A decision table has 3 binary conditions (Yes/No each). How many unique rules (columns) does a complete decision table need?"
+      options:
+        - text: "3"
+          correct: false
+        - text: "6"
+          correct: false
+        - text: "8"
+          correct: true
+        - text: "9"
+          correct: false
+      explanation: "With N binary conditions, a complete decision table needs 2^N rules. 2^3 = 8. Each column represents a unique combination of Yes/No values for all three conditions."
+
+    - id: Q4
+      type: single_choice
+      question: "In state transition testing, you test an 'invalid transition' by:"
+      options:
+        - text: "Testing each state once"
+          correct: false
+        - text: "Testing transitions that the system should REJECT"
+          correct: true
+        - text: "Testing transitions in reverse order"
+          correct: false
+        - text: "Testing the same transition from all states"
+          correct: false
+      explanation: "Invalid transitions test what happens when you try to do something the system shouldn't allow — like paying an empty cart, or shipping an unpaid order. These often reveal bugs because developers focus on the happy path."
+
+    - id: Q5
+      type: single_choice
+      question: "When should you run a Smoke test?"
+      options:
+        - text: "Only before a major release"
+          correct: false
+        - text: "Only when a specific bug is fixed"
+          correct: false
+        - text: "After every deployment to verify the app is minimally functional"
+          correct: true
+        - text: "As a replacement for regression testing"
+          correct: false
+      explanation: "Smoke tests are the 'does the app start?' check — run them after every deployment. They're fast (5–15 tests) and catch catastrophic failures early. They don't replace regression; they complement it."
+
+    - id: Q6
+      type: single_choice
+      question: "A requirement has no test cases linked to it in the traceability matrix. What does this mean?"
+      options:
+        - text: "The requirement was already verified informally"
+          correct: false
+        - text: "The requirement is untested — a coverage gap"
+          correct: true
+        - text: "The requirement is out of scope"
+          correct: false
+        - text: "The requirement was deferred to a future sprint"
+          correct: false
+      explanation: "An unlinked requirement is a coverage gap. Unless something explicitly marks it as out of scope, the absence of test cases means that requirement has never been systematically verified. Traceability makes this visible."
+
+    - id: Q7
+      type: single_choice
+      question: "Pairwise testing is most useful when:"
+      options:
+        - text: "You only have two input fields"
+          correct: false
+        - text: "You need to test every possible combination of many inputs"
+          correct: false
+        - text: "You have many input combinations and need to reduce test count without losing coverage of pairs"
+          correct: true
+        - text: "You are testing boundary values"
+          correct: false
+      explanation: "Pairwise shines when inputs combinatorially explode. Testing every combination of 5 fields with 10 values each = 100,000 tests. Pairwise reduces this to ~50 tests while still testing every pair of values at least once."
+
+    - id: Q8
+      type: single_choice
+      question: "A bug is found in production that was not caught by any test in the regression suite. What does this indicate?"
+      options:
+        - text: "The regression suite is too large"
+          correct: false
+        - text: "A coverage gap — the scenario was not represented in any test case"
+          correct: true
+        - text: "The test was run but skipped"
+          correct: false
+        - text: "Regression testing is unreliable"
+          correct: false
+      explanation: "A production bug that passes regression is a coverage gap. The correct response is to: (1) write a test case that would have caught it, (2) add it to the regression suite, (3) trace it back to the requirement it violates."
+
+    - id: Q9
+      type: single_choice
+      question: "What distinguishes a Sanity test from a Smoke test?"
+      options:
+        - text: "Sanity tests run faster than smoke tests"
+          correct: false
+        - text: "Sanity tests check a specific area after a targeted change; smoke tests check overall app health"
+          correct: true
+        - text: "Sanity tests run before deployment; smoke tests run after"
+          correct: false
+        - text: "They are the same thing with different names"
+          correct: false
+      explanation: "Smoke tests answer 'Is the app alive?' (broad, shallow). Sanity tests answer 'Did this specific fix work without breaking its neighbors?' (narrow, deeper). Both are short — the difference is scope and trigger."
+
+    - id: Q10
+      type: single_choice
+      question: "An order lifecycle has states: Draft → Submitted → Approved → Shipped → Delivered, with a Cancel path from Draft and Submitted. How many VALID transitions exist?"
+      options:
+        - text: "4"
+          correct: false
+        - text: "5"
+          correct: false
+        - text: "6"
+          correct: true
+        - text: "8"
+          correct: false
+      explanation: "Valid transitions: Draft→Submitted, Draft→Cancelled, Submitted→Approved, Submitted→Cancelled, Approved→Shipped, Shipped→Delivered. That is 6 valid transitions. All other state combinations (e.g. Delivered→Draft) are invalid and should be tested as negative cases."

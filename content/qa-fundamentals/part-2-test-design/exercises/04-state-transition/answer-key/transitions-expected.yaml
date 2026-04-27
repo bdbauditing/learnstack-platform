@@ -1,0 +1,113 @@
+# STAFF ONLY — used by yaml-field-match grader
+
+pass_threshold: 33
+
+transitions:
+  - current_state: draft
+    event: submit
+    next_state: submitted
+  - current_state: draft
+    event: approve
+    next_state: invalid
+  - current_state: draft
+    event: reject
+    next_state: invalid
+  - current_state: draft
+    event: ship
+    next_state: invalid
+  - current_state: draft
+    event: deliver
+    next_state: invalid
+  - current_state: draft
+    event: cancel
+    next_state: cancelled
+  - current_state: submitted
+    event: submit
+    next_state: invalid
+  - current_state: submitted
+    event: approve
+    next_state: approved
+  - current_state: submitted
+    event: reject
+    next_state: draft
+  - current_state: submitted
+    event: ship
+    next_state: invalid
+  - current_state: submitted
+    event: deliver
+    next_state: invalid
+  - current_state: submitted
+    event: cancel
+    next_state: cancelled
+  - current_state: approved
+    event: submit
+    next_state: invalid
+  - current_state: approved
+    event: approve
+    next_state: invalid
+  - current_state: approved
+    event: reject
+    next_state: invalid
+  - current_state: approved
+    event: ship
+    next_state: shipped
+  - current_state: approved
+    event: deliver
+    next_state: invalid
+  - current_state: approved
+    event: cancel
+    next_state: invalid
+  - current_state: shipped
+    event: submit
+    next_state: invalid
+  - current_state: shipped
+    event: approve
+    next_state: invalid
+  - current_state: shipped
+    event: reject
+    next_state: invalid
+  - current_state: shipped
+    event: ship
+    next_state: invalid
+  - current_state: shipped
+    event: deliver
+    next_state: delivered
+  - current_state: shipped
+    event: cancel
+    next_state: invalid
+  - current_state: delivered
+    event: submit
+    next_state: invalid
+  - current_state: delivered
+    event: approve
+    next_state: invalid
+  - current_state: delivered
+    event: reject
+    next_state: invalid
+  - current_state: delivered
+    event: ship
+    next_state: invalid
+  - current_state: delivered
+    event: deliver
+    next_state: invalid
+  - current_state: delivered
+    event: cancel
+    next_state: invalid
+  - current_state: cancelled
+    event: submit
+    next_state: invalid
+  - current_state: cancelled
+    event: approve
+    next_state: invalid
+  - current_state: cancelled
+    event: reject
+    next_state: invalid
+  - current_state: cancelled
+    event: ship
+    next_state: invalid
+  - current_state: cancelled
+    event: deliver
+    next_state: invalid
+  - current_state: cancelled
+    event: cancel
+    next_state: invalid

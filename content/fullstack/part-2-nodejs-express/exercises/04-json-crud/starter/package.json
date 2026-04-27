@@ -1,0 +1,15 @@
+{
+  "name": "04-json-crud",
+  "version": "1.0.0",
+  "description": "LearnStack: In-memory JSON CRUD API",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}

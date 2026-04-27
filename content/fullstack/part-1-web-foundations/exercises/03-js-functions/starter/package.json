@@ -1,0 +1,11 @@
+{
+  "name": "03-js-functions",
+  "version": "1.0.0",
+  "description": "LearnStack: JavaScript utility functions exercise",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

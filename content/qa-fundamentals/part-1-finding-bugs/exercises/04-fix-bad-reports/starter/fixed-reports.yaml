@@ -1,0 +1,23 @@
+# Rewrite each bad report below as a proper bug report.
+# All 5 must be completed to pass.
+
+bugs:
+  - title: ""
+    location: ""
+    severity: ""
+    priority: ""
+    environment:
+      browser: ""
+      os: ""
+      viewport: ""
+      url: ""
+    steps:
+      - action: navigate
+        url: ""
+      - action: click
+        selector: ""
+      - action: type
+        selector: ""
+        value: ""
+    expected: ""
+    actual: ""

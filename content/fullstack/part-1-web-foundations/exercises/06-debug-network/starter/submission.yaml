@@ -1,0 +1,31 @@
+# Network Debugging — Submission
+# Fill in every TODO based on your DevTools observations.
+
+scenario_a:
+  url: "https://jsonplaceholder.typicode.com/posts/9999"
+  status_code: TODO       # What status code did you see?
+  meaning: TODO           # In one sentence, what does this status code mean?
+  response_body: TODO     # What did the response body contain (if anything)?
+
+scenario_b:
+  url: "https://jsonplaceholder.typicode.com/users/1"
+  status_code: TODO
+  content_type: TODO      # What Content-Type header was returned?
+  first_field: TODO       # What is the first field in the JSON response?
+  response_size_bytes: TODO  # Approximate size shown in the Size column
+
+scenario_c:
+  url: "https://jsonplaceholder.typicode.com/posts?userId=1"
+  query_param: TODO       # What query parameter was used?
+  result_count: TODO      # How many items were returned?
+  where_in_devtools: TODO # Where exactly do you see the query params in DevTools?
+
+scenario_d:
+  network_profile: "Slow 3G"
+  slowest_phase: TODO     # Which timing phase took longest? (DNS, TTFB, Download, etc.)
+  total_time_ms: TODO     # Approximately how many ms did the request take?
+  normal_time_ms: TODO    # Without throttling, how fast is the same request?
+
+debugging_tips:
+  tip_1: TODO  # One practical tip for using the Network tab you learned today
+  tip_2: TODO  # A second practical tip

@@ -1,0 +1,44 @@
+# STAFF ONLY
+
+bugs:
+  - id: BUG-001
+    description: "Invalid email format accepted"
+    location: "registration/email"
+    severity: High
+    priority: High
+    signatureKeywords: ["email", "invalid", "format"]
+    keywordThreshold: 0.6
+
+  - id: BUG-002
+    description: "Password strength always shows Strong"
+    location: "registration/password"
+    severity: Medium
+    priority: Medium
+    signatureKeywords: ["password", "strength", "strong"]
+    keywordThreshold: 0.6
+
+  - id: BUG-003
+    description: "Mismatched passwords accepted"
+    location: "registration/confirm-password"
+    severity: High
+    priority: High
+    signatureKeywords: ["password", "mismatch", "confirm"]
+    keywordThreshold: 0.5
+
+  - id: BUG-004
+    description: "Form submits without terms checkbox"
+    location: "registration/terms"
+    severity: Medium
+    priority: High
+    signatureKeywords: ["terms", "checkbox", "submit"]
+    keywordThreshold: 0.6
+
+  - id: BUG-005
+    description: "Duplicate email shows 500 error"
+    location: "registration/duplicate-email"
+    severity: High
+    priority: Medium
+    signatureKeywords: ["email", "error", "duplicate"]
+    keywordThreshold: 0.5
+
+passThreshold: 4

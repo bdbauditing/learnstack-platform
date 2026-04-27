@@ -37,18 +37,13 @@ COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
 COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
 COPY package.json ./
 
-# Content is fetched at startup from CONTENT_GITHUB_REPO — no baking needed.
-# Set CONTENT_GITHUB_REPO env var on Render to your learnstack-platform GitHub URL.
-ENV CONTENT_REPO_PATH=/app/runtime-content
+# Bake QA track content into the image
+COPY content /app/content
+
+ENV CONTENT_REPO_PATH=/app
 
 WORKDIR /app/apps/api
 
 EXPOSE 3001
 
-CMD ["sh", "-c", "\
-  echo 'Fetching content from $CONTENT_GITHUB_REPO...' && \
-  git clone --depth=1 ${CONTENT_GITHUB_REPO} /app/runtime-content && \
-  echo 'Content ready.' && \
-  npx prisma db push && \
-  node dist/index.js \
-"]
+CMD ["sh", "-c", "npx prisma db push && node dist/index.js"]

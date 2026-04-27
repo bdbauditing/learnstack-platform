@@ -1,0 +1,14 @@
+type: structured-doc
+submissionFile: submission.yaml
+requiredPaths:
+  - request.method
+  - request.url
+  - request.protocol
+  - request.headers
+  - response.status_code
+  - response.status_text
+  - response.headers
+  - response.body_fields
+  - reflection.what_surprised_you
+  - reflection.status_code_meaning
+passThreshold: 0.8

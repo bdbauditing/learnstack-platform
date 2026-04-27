@@ -1,0 +1,161 @@
+# Accessibility Violation Report
+#
+# Run starter/scripts/run-axe-scan.ts first to discover violations:
+#   npx ts-node scripts/run-axe-scan.ts
+#
+# Then fill in each entry below. The grader checks that each violation
+# is identified by axe rule ID and affected element. Include the axe
+# rule ID (e.g. "image-alt") in your title or description.
+#
+# There are 10 planted violations to find. Pass: identify 8 or more.
+
+bugs:
+  - id: A11Y-001
+    title: ""            # e.g. "image-alt: hero image missing alt attribute"
+    description: ""      # include the axe rule ID and element selector
+    severity: ""         # Critical / Serious / Moderate / Minor (use axe's impact level)
+    priority: ""         # High / Medium / Low
+    steps:
+      - action: navigate
+        url: "TODO: the page where this violation occurs"
+    expected: "TODO: what the correct accessible behaviour should be"
+    actual: "TODO: what axe found — include the rule ID and element"
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-002
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-003
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-004
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-005
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-006
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-007
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-008
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-009
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"
+
+  - id: A11Y-010
+    title: ""
+    description: ""
+    severity: ""
+    priority: ""
+    steps:
+      - action: navigate
+        url: "TODO"
+    expected: ""
+    actual: ""
+    environment:
+      os: "TODO"
+      browser: "Chrome"
+      appVersion: "TODO"

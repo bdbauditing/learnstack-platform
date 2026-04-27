@@ -1,0 +1,20 @@
+type: structured-doc
+submissionFile: submission.yaml
+requiredPaths:
+  - users.list.method
+  - users.list.path
+  - users.create.method
+  - users.get_one.path
+  - users.update.method
+  - users.delete.method
+  - posts.list.method
+  - posts.create.method
+  - posts.get_one.path
+  - posts.update.method
+  - posts.delete.method
+  - comments.list.path
+  - comments.create.method
+  - comments.delete.method
+  - design_notes.auth_header
+  - design_notes.why_nouns
+passThreshold: 0.8

@@ -17,10 +17,6 @@ services:
         generateValue: true
       - key: JWT_REFRESH_SECRET
         generateValue: true
-      - key: CONTENT_GITHUB_REPO
-        # Set to your learnstack-platform GitHub URL, e.g.:
-        # https://github.com/your-username/learnstack-platform
-        sync: false
 
   - type: web
     name: learnstack-platform-web
