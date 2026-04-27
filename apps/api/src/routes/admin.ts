@@ -138,7 +138,8 @@ router.get('/users/:id/progress', async (req, res) => {
     }
   }
 
-  const track = getTrack();
+  const track = getTrack('qa-fundamentals');
+  if (!track) throw new Error('qa-fundamentals track not found');
   let completedItems = 0;
   let totalItems = 0;
 
