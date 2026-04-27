@@ -32,20 +32,17 @@ Each report must include the `## Evidence` section (screenshot + console + netwo
 ## Format
 
 ```markdown
----
-title: "[Login] Submit button disabled with valid credentials"
-severity: High
-priority: High
----
+# [Login] Submit button disabled with valid credentials
+
+**Severity:** High
+**Priority:** High
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://learnstack-taskforge-web.onrender.com/login |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/login
 
 ## Steps to Reproduce
 

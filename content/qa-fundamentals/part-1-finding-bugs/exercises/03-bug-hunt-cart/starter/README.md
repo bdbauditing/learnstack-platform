@@ -19,26 +19,23 @@ The billing page lets teams choose a subscription plan, set a seat count, and ap
 Create one `bug-NNN.md` file per bug. A template is already in `bug-001.md`.
 
 ```markdown
----
-title: "[Billing] Seat count can be decremented to 0"
-severity: High
-priority: High
----
+# [Billing] Seat count can be decremented to 0
+
+**Severity:** High
+**Priority:** High
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://learnstack-taskforge-web.onrender.com/billing |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/billing
 
 ## Steps to Reproduce
 
 1. Log in and navigate to /billing
 2. Select any subscription plan
-3. Click the − (decrease) button on the seat count 
+3. Click the − (decrease) button on the seat count
 4. Keep clicking until the count reaches 0
 
 ## Expected Behavior

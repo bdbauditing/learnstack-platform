@@ -36,20 +36,17 @@ A template is provided in `starter/bug-001.md`. Copy it for each additional bug.
 ### Bug report format
 
 ```markdown
----
-title: "[Login] Submit button disabled with valid credentials"
-severity: High
-priority: High
----
+# [Login] Submit button disabled with valid credentials
+
+**Severity:** High
+**Priority:** High
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://learnstack-taskforge-web.onrender.com/login |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/login
 
 ## Steps to Reproduce
 
@@ -67,7 +64,7 @@ The Submit button becomes enabled after both fields are filled and clicking it l
 The Submit button remains visually disabled even with valid credentials entered.
 ```
 
-> **Why this format?** This is how you'd file a bug in GitHub Issues or Jira. The `title` frontmatter = Jira Summary. `severity`/`priority` = Jira fields. The sections = Jira Description template.
+> **Why this format?** This is how GitHub Issues bug reports actually look. The H1 heading = GitHub issue title = Jira Summary. `**Severity:**` / `**Priority:**` = Jira fields (dropdown in the real UI). The sections = standard fields in every bug tracker.
 
 ## How to submit
 

@@ -12,20 +12,17 @@ You need at least **3 bugs** to pass.
 ## Format (GitHub Issue / Jira style)
 
 ```markdown
----
-title: "[Login] Submit button disabled with valid credentials"
-severity: High
-priority: High
----
+# [Login] Submit button disabled with valid credentials
+
+**Severity:** High
+**Priority:** High
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://learnstack-taskforge-web.onrender.com/login |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/login
 
 ## Steps to Reproduce
 
@@ -47,9 +44,9 @@ Submit button remains visually disabled even with valid credentials.
 
 | Field | Real-world equivalent | Values |
 |-------|-----------------------|--------|
-| `title` | Jira Summary / GitHub Issue title | Start with `[Area]` e.g. `[Login]`, `[Registration]` |
-| `severity` | Jira Severity | Critical / High / Medium / Low |
-| `priority` | Jira Priority | High / Medium / Low |
+| H1 heading `# [Area] ...` | GitHub issue title / Jira Summary | Start with `[Area]` — e.g. `[Login]`, `[Registration]` |
+| `**Severity:**` | Jira Severity field (dropdown in UI) | Critical / High / Medium / Low |
+| `**Priority:**` | Jira Priority field (dropdown in UI) | High / Medium / Low |
 | `## Environment` | Jira Environment field | Browser, OS, viewport, URL |
 | `## Steps to Reproduce` | Jira Steps to Reproduce | Numbered, specific steps |
 | `## Expected Behavior` | Jira Expected Result | What should happen |

@@ -21,7 +21,8 @@ Explore **https://learnstack-taskforge-web.onrender.com**. Find 10 bugs across a
 Name your files `bug-001.md`, `bug-002.md`, etc. A template is in `bug-001.md`.
 
 Each report must include:
-- `title`, `severity`, `priority` in the frontmatter
+- H1 heading `# [Area] description` — the bug title
+- `**Severity:**` and `**Priority:**` inline fields
 - `## Environment` — browser, OS, viewport, URL
 - `## Steps to Reproduce` — numbered, specific steps
 - `## Expected Behavior` — what should happen

@@ -9,20 +9,17 @@ Create one Markdown file per bug: `bug-001.md`, `bug-002.md`, etc. A blank templ
 ## Format (GitHub Issue / Jira style)
 
 ```markdown
----
-title: "[Registration] Email field accepts text without an @ symbol"
-severity: High
-priority: High
----
+# [Registration] Email field accepts text without an @ symbol
+
+**Severity:** High
+**Priority:** High
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://learnstack-taskforge-web.onrender.com/register |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/register
 
 ## Steps to Reproduce
 

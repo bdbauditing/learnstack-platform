@@ -88,18 +88,19 @@ interface MarkdownDocConfig {
   passThreshold: number; // fraction 0–1 of files that must pass
 }
 
-function parseMarkdownFrontmatter(content: string): Record<string, string> {
-  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!match) return {};
-  const fm: Record<string, string> = {};
-  for (const line of match[1].split('\n')) {
-    const colonIdx = line.indexOf(':');
-    if (colonIdx === -1) continue;
-    const key = line.slice(0, colonIdx).trim();
-    const val = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
-    if (key) fm[key] = val;
+// Extract meta from plain Markdown: H1 for title, **Key:** Value for fields
+function parseMarkdownMeta(content: string): Record<string, string> {
+  const meta: Record<string, string> = {};
+  // H1 heading → title
+  const h1 = content.match(/^#\s+(.+)/m);
+  if (h1) meta['title'] = h1[1].trim();
+  // **Key:** Value (inline bold-label fields)
+  const inlineRe = /\*\*([A-Za-z][\w\s]*):\*\*\s*(.+)/g;
+  let m: RegExpExecArray | null;
+  while ((m = inlineRe.exec(content)) !== null) {
+    meta[m[1].trim().toLowerCase()] = m[2].trim();
   }
-  return fm;
+  return meta;
 }
 
 function gradeMarkdownDoc(starterDir: string, answerDir: string) {
@@ -131,14 +132,14 @@ function gradeMarkdownDoc(starterDir: string, answerDir: string) {
 
   const fileResults = bugFiles.map((filename) => {
     const content = fs.readFileSync(path.join(starterDir, filename), 'utf8');
-    const fm = parseMarkdownFrontmatter(content);
+    const meta = parseMarkdownMeta(content);
     const issues: string[] = [];
 
-    // Frontmatter fields
+    // Required meta fields (H1 title + inline **Field:** Value)
     for (const field of config.requiredFrontmatter ?? []) {
-      const val = fm[field]?.trim() ?? '';
-      if (!val || val === '""' || val === "''") {
-        issues.push(`Frontmatter "${field}" is missing or empty`);
+      const val = meta[field]?.trim() ?? '';
+      if (!val) {
+        issues.push(`"${field}" is missing or empty — add it as **${field.charAt(0).toUpperCase() + field.slice(1)}:** value or an H1 heading`);
       }
     }
 

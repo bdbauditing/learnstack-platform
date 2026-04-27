@@ -144,20 +144,17 @@ In this course, you write bug reports as **Markdown files** — the same format 
 ### What a good report looks like
 
 ```markdown
----
-title: "[Login] Submit button disabled with valid credentials"
-severity: High
-priority: High
----
+# [Login] Submit button disabled with valid credentials
+
+**Severity:** High
+**Priority:** High
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://app.example.com/login |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://app.example.com/login
 
 ## Steps to Reproduce
 
@@ -185,7 +182,7 @@ The Submit button remains visually disabled (grayed out) even with valid credent
 
 ### Why Markdown?
 
-Jira, GitHub Issues, and Linear all render Markdown. Learning to write bug reports in Markdown means you can file them in any tool your future employer uses without changing anything but where you paste.
+This is the actual format used in GitHub Issues bug report templates (VS Code, React, Next.js all use this structure). Jira renders Markdown too, and the section names — Steps to Reproduce, Expected Behavior, Actual Behavior — are the same fields you fill in on Jira's bug form. In Jira, Severity and Priority are dropdown fields in the UI; in this course they're written inline as `**Severity:** High` since you're writing in a text file, not a form.
 
 ### Evidence: the secret weapon
 

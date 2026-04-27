@@ -21,6 +21,8 @@ You don't need to take a real screenshot — just write a realistic filename and
 
 ## Evidence format
 
+Add this section at the bottom of each bug file:
+
 ```markdown
 ## Evidence
 

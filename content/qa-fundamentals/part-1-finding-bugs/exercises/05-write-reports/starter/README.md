@@ -14,20 +14,17 @@ Make up plausible app URLs and field names — use TaskForge paths like `/profil
 ## Format reminder
 
 ```markdown
----
-title: "[Profile] Bio changes not saved after clicking Update"
-severity: Medium
-priority: Medium
----
+# [Profile] Bio changes not saved after clicking Update
+
+**Severity:** Medium
+**Priority:** Medium
 
 ## Environment
 
-| Field    | Value |
-|----------|-------|
-| Browser  | Chrome 130 |
-| OS       | macOS 14 |
-| Viewport | 1440x900 |
-| URL      | https://learnstack-taskforge-web.onrender.com/profile |
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/profile
 
 ## Steps to Reproduce
 
