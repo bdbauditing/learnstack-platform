@@ -1,8 +1,0 @@
-# Pick exactly 5 tests for the smoke suite.
-
-selected_tests:
-  - id: ""
-  - id: ""
-  - id: ""
-  - id: ""
-  - id: ""

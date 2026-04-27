@@ -1,5 +1,0 @@
-Condition,Rule 1,Rule 2,Rule 3,Rule 4
-Order >= $50,Y,Y,N,N
-Member,Y,N,Y,N
-Shipping cost,TODO,TODO,TODO,TODO
-Order accepted?,TODO,TODO,TODO,TODO

@@ -1,4 +1,0 @@
-type: test-runner
-testCommand: "npm test --forceExit"
-workingDirectory: starter
-passThreshold: 1.0

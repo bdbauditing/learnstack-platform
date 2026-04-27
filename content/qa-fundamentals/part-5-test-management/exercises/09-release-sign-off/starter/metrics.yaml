@@ -1,8 +1,0 @@
-# Compute each metric from starter/execution-data.yaml.
-# Round to 1 decimal place. Express rates as percentages (e.g. 87.0 not 0.87).
-
-defect_density: null       # defects per story point (total_found / story_points_tested)
-pass_rate_pct: null        # percentage of test cases passed (passed / total * 100)
-escape_rate_pct: null      # percentage of defects that escaped (escaped / total_found * 100)
-avg_bug_age_days: null     # mean of resolution_times_days (round to 1 decimal)
-mttr_days: null            # same as avg_bug_age for this exercise

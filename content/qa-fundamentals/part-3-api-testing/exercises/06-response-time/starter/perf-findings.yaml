@@ -1,8 +1,0 @@
-# Document the slow endpoint here after running Phase A.
-
-perf_findings:
-  slow_endpoint: ""          # e.g. "GET /reports/export"
-  measured_time_ms: 0        # actual measured response time
-  sla_threshold_ms: 500      # what the SLA requires
-  adjusted_threshold_ms: 0   # your new threshold (measured * 1.2)
-  recommendation: ""         # one sentence: what you found and what should be done

@@ -1,6 +1,0 @@
-endpoint: "GET /tasks"
-concurrent_users: 20
-p95_ms: null      # fill in after run — must be < 500 to pass SLO
-error_rate_pct: null  # fill in after run — must be 0.0 to pass SLO
-passed_slo: null  # set to true if p95_ms < 500 AND error_rate_pct == 0.0, else false
-notes: ""         # optional: anything unusual you observed

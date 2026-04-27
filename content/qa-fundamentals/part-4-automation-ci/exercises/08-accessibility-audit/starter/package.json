@@ -1,8 +1,0 @@
-{
-  "name": "ex08-accessibility-audit",
-  "private": true,
-  "dependencies": {
-    "@axe-core/playwright": "^4.0.0",
-    "@playwright/test": "^1.40.0"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "_comment": "Replace with your exported environment.",
-  "name": "TaskForge Perf",
-  "values": [
-    { "key": "base_url", "value": "TODO: actual API URL", "enabled": true },
-    { "key": "auth_token", "value": "TODO: valid JWT", "enabled": true }
-  ]
-}

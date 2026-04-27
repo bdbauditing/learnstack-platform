@@ -1,8 +1,0 @@
-{
-  "_comment": "Replace with your exported environment.",
-  "name": "TaskForge Negative Tests",
-  "values": [
-    { "key": "base_url", "value": "TODO: actual API URL", "enabled": true },
-    { "key": "valid_token", "value": "TODO: valid JWT for authenticated requests", "enabled": true }
-  ]
-}

@@ -1,8 +1,0 @@
-{
-  "_comment": "Replace this with your exported Postman collection (v2.1 format).",
-  "info": {
-    "name": "Task CRUD — TODO",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": []
-}
