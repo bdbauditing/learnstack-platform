@@ -65,7 +65,7 @@ export default function ExercisePage() {
     );
   }
 
-  const exerciseId = `${partSlug}/${exerciseSlug}`;
+  const exerciseId = `${trackSlug}/${partSlug}/${exerciseSlug}`;
   const readmeMd = exercise.starterFiles['README.md'] ?? '';
 
   return (

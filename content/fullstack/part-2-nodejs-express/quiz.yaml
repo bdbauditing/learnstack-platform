@@ -1,0 +1,71 @@
+quiz:
+  questions:
+    - id: q1
+      text: "What is the correct signature for an Express error-handling middleware function?"
+      options:
+        - id: a
+          text: "(req, res) => {}"
+        - id: b
+          text: "(req, res, next) => {}"
+        - id: c
+          text: "(err, req, res, next) => {}"
+        - id: d
+          text: "(error, response) => {}"
+      correct: c
+      explanation: "Express identifies error-handling middleware by the presence of exactly 4 parameters. The first is the error object, followed by req, res, and next. Two- or three-parameter functions are treated as regular middleware."
+
+    - id: q2
+      text: "In an Express middleware function, what happens if you forget to call next() and don't send a response?"
+      options:
+        - id: a
+          text: "Express automatically calls next() for you"
+        - id: b
+          text: "The request hangs indefinitely (timeout)"
+        - id: c
+          text: "Express returns a 500 error automatically"
+        - id: d
+          text: "The next middleware is still called eventually"
+      correct: b
+      explanation: "Middleware must either call next() to pass control to the next function, or send a response using res.json(), res.send(), etc. If neither happens, the client waits forever (until a network timeout)."
+
+    - id: q3
+      text: "Which Express built-in middleware must be added before route handlers that read req.body from a JSON request?"
+      options:
+        - id: a
+          text: "express.static()"
+        - id: b
+          text: "express.urlencoded()"
+        - id: c
+          text: "express.json()"
+        - id: d
+          text: "express.router()"
+      correct: c
+      explanation: "express.json() parses incoming requests with a Content-Type of application/json and populates req.body. Without it, req.body is undefined. express.urlencoded() is for HTML form data."
+
+    - id: q4
+      text: "You receive a GET /posts/42 request. Where does Express put the value '42'?"
+      options:
+        - id: a
+          text: "req.query.id"
+        - id: b
+          text: "req.body.id"
+        - id: c
+          text: "req.params.id"
+        - id: d
+          text: "req.headers.id"
+      correct: c
+      explanation: "Dynamic route segments defined with a colon (e.g. /posts/:id) are captured in req.params. req.query holds ?key=value query string pairs; req.body holds the request payload; req.headers holds HTTP headers."
+
+    - id: q5
+      text: "Why does Node.js handle thousands of concurrent I/O-bound connections efficiently on a single thread?"
+      options:
+        - id: a
+          text: "It spawns a new OS thread for each connection"
+        - id: b
+          text: "It uses the event loop to process callbacks when I/O completes, never blocking the thread"
+        - id: c
+          text: "It batches all requests and processes them in bulk"
+        - id: d
+          text: "It uses shared memory between worker processes"
+      correct: b
+      explanation: "Node.js delegates I/O (network, disk) to libuv, which uses the OS kernel's async facilities. When an operation completes, a callback is queued on the event queue. The event loop processes these callbacks one at a time on the single JS thread — so the thread is almost always idle, ready to process the next event."

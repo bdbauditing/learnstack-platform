@@ -87,11 +87,11 @@ export const api = {
   },
 
   progress: {
-    getPart: (partSlug: string): Promise<ExerciseProgress[]> =>
-      request(`/progress/me?partSlug=${encodeURIComponent(partSlug)}`),
+    getPart: (trackSlug: string, partSlug: string): Promise<ExerciseProgress[]> =>
+      request(`/progress/me?trackSlug=${encodeURIComponent(trackSlug)}&partSlug=${encodeURIComponent(partSlug)}`),
 
-    getFullTrack: (): Promise<TrackProgress> =>
-      request('/progress/me'),
+    getFullTrack: (trackSlug: string): Promise<TrackProgress> =>
+      request(`/progress/me?trackSlug=${encodeURIComponent(trackSlug)}`),
   },
 
   admin: {

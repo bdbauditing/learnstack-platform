@@ -1,44 +1,33 @@
 import { Router } from 'express';
-import fs from 'fs';
-import path from 'path';
 import { requireAuth } from '../middleware/auth.js';
-import { getTrack, getPart, getExercise, getQuiz } from '../lib/content-loader.js';
-
-const CONTENT_ROOT = process.env.CONTENT_REPO_PATH ?? path.resolve(__dirname, '../../../../learnstack-qa-track');
-const CONTENT_DIR = path.join(CONTENT_ROOT, 'content');
+import { getTracks, getTrack, getPart, getExercise, getQuiz, getConceptsMd } from '../lib/content-loader.js';
 
 const router = Router();
 
-// All tracks routes require auth
 router.use(requireAuth);
 
-// GET /api/tracks — return the full track index
+// GET /api/tracks
 router.get('/', (_req, res) => {
   try {
-    const track = getTrack();
-    res.json([track]);
+    res.json(getTracks());
   } catch (err) {
     res.status(500).json({ error: 'Internal Server Error', message: String(err) });
   }
 });
 
-// GET /api/tracks/:trackSlug — return a single track
+// GET /api/tracks/:trackSlug
 router.get('/:trackSlug', (req, res) => {
-  try {
-    const track = getTrack();
-    if (track.slug !== req.params.trackSlug) {
-      res.status(404).json({ error: 'Not Found', message: 'Track not found' });
-      return;
-    }
-    res.json(track);
-  } catch (err) {
-    res.status(500).json({ error: 'Internal Server Error', message: String(err) });
+  const track = getTrack(req.params.trackSlug);
+  if (!track) {
+    res.status(404).json({ error: 'Not Found', message: 'Track not found' });
+    return;
   }
+  res.json(track);
 });
 
 // GET /api/tracks/:trackSlug/parts/:partSlug
 router.get('/:trackSlug/parts/:partSlug', (req, res) => {
-  const part = getPart(req.params.partSlug);
+  const part = getPart(req.params.trackSlug, req.params.partSlug);
   if (!part) {
     res.status(404).json({ error: 'Not Found', message: 'Part not found' });
     return;
@@ -48,7 +37,7 @@ router.get('/:trackSlug/parts/:partSlug', (req, res) => {
 
 // GET /api/tracks/:trackSlug/parts/:partSlug/exercises/:exerciseSlug
 router.get('/:trackSlug/parts/:partSlug/exercises/:exerciseSlug', (req, res) => {
-  const exercise = getExercise(req.params.partSlug, req.params.exerciseSlug);
+  const exercise = getExercise(req.params.trackSlug, req.params.partSlug, req.params.exerciseSlug);
   if (!exercise) {
     res.status(404).json({ error: 'Not Found', message: 'Exercise not found' });
     return;
@@ -58,17 +47,13 @@ router.get('/:trackSlug/parts/:partSlug/exercises/:exerciseSlug', (req, res) => 
 
 // GET /api/tracks/:trackSlug/parts/:partSlug/concepts
 router.get('/:trackSlug/parts/:partSlug/concepts', (req, res) => {
-  const conceptsPath = path.join(CONTENT_DIR, req.params.partSlug, 'concepts.md');
-  if (!fs.existsSync(conceptsPath)) {
-    res.json({ content: '' });
-    return;
-  }
-  res.json({ content: fs.readFileSync(conceptsPath, 'utf8') });
+  const content = getConceptsMd(req.params.trackSlug, req.params.partSlug);
+  res.json({ content });
 });
 
 // GET /api/tracks/:trackSlug/parts/:partSlug/quiz
 router.get('/:trackSlug/parts/:partSlug/quiz', (req, res) => {
-  const quiz = getQuiz(req.params.partSlug);
+  const quiz = getQuiz(req.params.trackSlug, req.params.partSlug);
   if (!quiz) {
     res.status(404).json({ error: 'Not Found', message: 'Quiz not found' });
     return;

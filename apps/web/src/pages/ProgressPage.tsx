@@ -12,7 +12,7 @@ export default function ProgressPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api.progress.getFullTrack()
+    api.progress.getFullTrack(TRACK_SLUG)
       .then(setProgress)
       .catch((e: Error) => setError(e.message))
       .finally(() => setLoading(false));

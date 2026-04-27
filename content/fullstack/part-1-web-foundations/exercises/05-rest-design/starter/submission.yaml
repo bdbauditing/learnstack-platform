@@ -1,0 +1,101 @@
+# REST API Design — Blog Platform
+# Fill in every TODO. Use proper HTTP methods and RESTful URL patterns.
+
+users:
+  list:
+    method: TODO      # e.g. GET
+    path: TODO        # e.g. /users
+    description: TODO # e.g. "Return a list of all users"
+    success_status: TODO  # e.g. 200
+    requires_auth: TODO   # true or false
+
+  create:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+  get_one:
+    method: TODO
+    path: TODO        # hint: how do you identify one user?
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+  update:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+  delete:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+posts:
+  list:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: false
+
+  create:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+  get_one:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: false
+
+  update:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+  delete:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+comments:
+  list:
+    method: TODO
+    path: TODO    # hint: nested under the parent post
+    description: TODO
+    success_status: TODO
+    requires_auth: false
+
+  create:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+  delete:
+    method: TODO
+    path: TODO
+    description: TODO
+    success_status: TODO
+    requires_auth: TODO
+
+design_notes:
+  auth_header: TODO    # What header carries the token? e.g. "Authorization: Bearer <token>"
+  why_nouns: TODO      # In 1-2 sentences, why do REST APIs use nouns instead of verbs?
+  versioning: TODO     # How would you version this API if you needed to ship breaking changes?

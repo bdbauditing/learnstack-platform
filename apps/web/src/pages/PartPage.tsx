@@ -42,7 +42,7 @@ export default function PartPage() {
       fetchConceptsMd(trackSlug, partSlug),
       api.tracks.getQuiz(trackSlug, partSlug).catch(() => null),
       api.quizAttempts.listMe(partSlug).then((a) => a[0] ?? null).catch(() => null),
-      api.progress.getPart(partSlug).catch(() => []),
+      api.progress.getPart(trackSlug!, partSlug).catch(() => []),
     ])
       .then(([t, md, q, attempt, prog]) => {
         setTrack(t);

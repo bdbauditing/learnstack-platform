@@ -1,0 +1,15 @@
+{
+  "name": "03-middleware",
+  "version": "1.0.0",
+  "description": "LearnStack: Express middleware exercise",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}

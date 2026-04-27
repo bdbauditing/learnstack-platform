@@ -9,16 +9,16 @@ const prisma = new PrismaClient();
 
 router.use(requireAuth);
 
-// GET /api/progress/me?partSlug=...  → ExerciseProgress[] for one part (PartPage)
-// GET /api/progress/me               → TrackProgress (ProgressPage)
+// GET /api/progress/me?trackSlug=...&partSlug=... → ExerciseProgress[] (PartPage)
+// GET /api/progress/me?trackSlug=...             → TrackProgress     (ProgressPage)
 router.get('/me', async (req, res) => {
   const userId = req.user!.sub;
-  const { partSlug } = req.query;
+  const { trackSlug, partSlug } = req.query;
 
   if (partSlug && typeof partSlug === 'string') {
-    // Backward-compat: per-part flat list used by PartPage
+    const prefix = trackSlug ? `${trackSlug}/${partSlug}/` : `${partSlug}/`;
     const submissions = await prisma.submission.findMany({
-      where: { userId, exerciseId: { startsWith: `${partSlug}/` } },
+      where: { userId, exerciseId: { startsWith: prefix } },
       select: { exerciseId: true, status: true, score: true, submittedAt: true },
       orderBy: { submittedAt: 'desc' },
     });
@@ -33,10 +33,17 @@ router.get('/me', async (req, res) => {
     return;
   }
 
-  // Full track progress — 2 DB queries, joined in memory
+  const slug = (trackSlug as string | undefined) ?? 'qa-fundamentals';
+  const track = getTrack(slug);
+
+  if (!track) {
+    res.status(404).json({ error: 'Not Found', message: 'Track not found' });
+    return;
+  }
+
   const [submissions, quizAttempts] = await Promise.all([
     prisma.submission.findMany({
-      where: { userId },
+      where: { userId, exerciseId: { startsWith: `${slug}/` } },
       select: { exerciseId: true, status: true, score: true, submittedAt: true },
       orderBy: { submittedAt: 'desc' },
     }),
@@ -47,7 +54,6 @@ router.get('/me', async (req, res) => {
     }),
   ]);
 
-  // Latest submission per exerciseId
   const latestSub = new Map<string, { status: string; score: number | null }>();
   for (const s of submissions) {
     if (!latestSub.has(s.exerciseId)) {
@@ -55,7 +61,6 @@ router.get('/me', async (req, res) => {
     }
   }
 
-  // Latest quiz attempt per quizId
   const latestQuiz = new Map<string, { score: number; passed: boolean }>();
   for (const a of quizAttempts) {
     if (!latestQuiz.has(a.quizId)) {
@@ -63,7 +68,6 @@ router.get('/me', async (req, res) => {
     }
   }
 
-  const track = getTrack();
   let completedItems = 0;
   let totalItems = 0;
 
@@ -79,7 +83,7 @@ router.get('/me', async (req, res) => {
     }
 
     const exercises = part.exercises.map((ex) => {
-      const key = `${part.slug}/${ex.slug}`;
+      const key = `${slug}/${part.slug}/${ex.slug}`;
       const sub = latestSub.get(key);
       totalItems++;
       if (sub?.status === 'PASSED') completedItems++;
