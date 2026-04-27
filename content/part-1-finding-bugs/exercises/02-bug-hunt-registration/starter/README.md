@@ -1,6 +1,6 @@
 # Starter — Exercise 02: Bug Hunt Registration
 
-Open **TODO: actual buggy app URL/register** and find 5 bugs. You need **4/5 to pass**.
+Open **https://learnstack-taskforge-web.onrender.com/register** and find 5 bugs. You need **4/5 to pass**.
 
 Same format as Exercise 01. See the bugs.yaml template below.
 
@@ -16,7 +16,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/register"
+      url: "https://learnstack-taskforge-web.onrender.com/register"
     steps:
       - action: navigate
         url: "/register"

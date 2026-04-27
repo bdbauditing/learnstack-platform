@@ -10,7 +10,7 @@ A login page has **4 planted bugs**. Your job is to find them and report each on
 
 ## The app
 
-**TODO: actual buggy app URL** — open it in your browser and test the login page manually.
+**https://learnstack-taskforge-web.onrender.com** — open it in your browser and test the login page manually.
 
 What to test:
 - Happy path: valid credentials → should log in

@@ -16,7 +16,7 @@ Write a full test suite that would catch bugs in this feature.
 
 ## The app
 
-**TODO: actual buggy app URL** — navigate to the tasks page, enable bulk mode.
+**https://learnstack-taskforge-web.onrender.com** — navigate to the tasks page, enable bulk mode.
 
 ## What to test
 

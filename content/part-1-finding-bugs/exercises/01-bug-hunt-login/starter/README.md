@@ -1,6 +1,6 @@
 # Starter — Exercise 01: Bug Hunt Login
 
-Clone this folder. Open the app at **TODO: actual buggy app URL** and find bugs on the login page.
+Clone this folder. Open the app at **https://learnstack-taskforge-web.onrender.com** and find bugs on the login page.
 
 Fill in `bugs.yaml` with each bug you find. You need to find **at least 3 bugs** to pass.
 
@@ -16,7 +16,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/login"
+      url: "https://learnstack-taskforge-web.onrender.com/login"
     steps:
       - action: navigate
         url: "/login"

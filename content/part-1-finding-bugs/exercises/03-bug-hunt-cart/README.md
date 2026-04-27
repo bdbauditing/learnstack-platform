@@ -10,7 +10,7 @@ The TaskForge 2.0 team billing / subscription upgrade page has **6 planted bugs*
 
 ## The app
 
-**TODO: actual buggy app URL** — log in, then navigate to **Settings → Billing → Upgrade Plan**.
+**https://learnstack-taskforge-web.onrender.com** — log in, then navigate to **Settings → Billing → Upgrade Plan**.
 
 What to test:
 - Seat count controls (increase, decrease, reduce to 0)

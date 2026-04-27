@@ -10,7 +10,7 @@ A registration form has **5 planted bugs**. Find and report them in `bugs.yaml`.
 
 ## The app
 
-**TODO: actual buggy app URL** — navigate to the registration page.
+**https://learnstack-taskforge-web.onrender.com** — navigate to the registration page.
 
 What to test:
 - All required fields (name, email, password, confirm password)

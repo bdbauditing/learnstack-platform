@@ -16,7 +16,7 @@ This is everything from exercises 01–07 combined:
 
 ## The app
 
-**TODO: actual buggy app URL** — explore the entire app. Every page has bugs.
+**https://learnstack-taskforge-web.onrender.com** — explore the entire app. Every page has bugs.
 
 ## Deliverable
 

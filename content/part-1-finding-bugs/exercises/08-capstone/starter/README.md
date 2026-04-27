@@ -1,6 +1,6 @@
 # Starter — Exercise 08: Capstone
 
-Explore the entire app at **TODO: actual buggy app URL**. Find 10 bugs across all pages.
+Explore the entire app at **https://learnstack-taskforge-web.onrender.com**. Find 10 bugs across all pages.
 
 Write complete bug reports with:
 - All required fields
@@ -41,7 +41,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/login"
+      url: "https://learnstack-taskforge-web.onrender.com/login"
     steps:
       - action: navigate
         url: "/login"

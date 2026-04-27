@@ -1,6 +1,6 @@
 # Starter — Exercise 03: Bug Hunt Shopping Cart
 
-Open **TODO: actual buggy app URL** → add a product → go to Cart. Find 6 bugs. **Need 5/6 to pass.**
+Open **https://learnstack-taskforge-web.onrender.com** → add a product → go to Cart. Find 6 bugs. **Need 5/6 to pass.**
 
 ## Format
 
@@ -14,7 +14,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/cart"
+      url: "https://learnstack-taskforge-web.onrender.com/cart"
     steps:
       - action: navigate
         url: "/cart"

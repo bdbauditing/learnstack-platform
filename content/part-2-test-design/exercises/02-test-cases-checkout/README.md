@@ -12,7 +12,7 @@ Write test cases for a checkout flow. The checkout has multi-step logic (cart �
 
 ## The buggy app
 
-**TODO: actual buggy app URL** — the checkout flow has 6 planted bugs.
+**https://learnstack-taskforge-web.onrender.com** — the checkout flow has 6 planted bugs.
 
 ## What to test
 

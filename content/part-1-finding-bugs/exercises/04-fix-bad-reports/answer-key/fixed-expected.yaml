@@ -10,7 +10,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/login"
+      url: "https://learnstack-taskforge-web.onrender.com/login"
     steps:
       - action: navigate
         url: "/login"
@@ -30,7 +30,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/cart"
+      url: "https://learnstack-taskforge-web.onrender.com/cart"
     steps:
       - action: navigate
         url: "/cart"
@@ -50,7 +50,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/dashboard"
+      url: "https://learnstack-taskforge-web.onrender.com/dashboard"
     steps:
       - action: navigate
         url: "/login"
@@ -70,7 +70,7 @@ bugs:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "TODO: actual buggy app URL/register"
+      url: "https://learnstack-taskforge-web.onrender.com/register"
     steps:
       - action: navigate
         url: "/register"
@@ -90,7 +90,7 @@ bugs:
       browser: Safari 17
       os: iOS 17
       viewport: 375x667
-      url: "TODO: actual buggy app URL/checkout"
+      url: "https://learnstack-taskforge-web.onrender.com/checkout"
     steps:
       - action: navigate
         url: "/checkout"

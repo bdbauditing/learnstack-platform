@@ -12,7 +12,7 @@ Write test cases for a login page. The test cases will be converted to Playwrigh
 
 ## The buggy app
 
-**TODO: actual buggy app URL** — the login page has 5 planted bugs.
+**https://learnstack-taskforge-web.onrender.com** — the login page has 5 planted bugs.
 
 ## What to test
 
