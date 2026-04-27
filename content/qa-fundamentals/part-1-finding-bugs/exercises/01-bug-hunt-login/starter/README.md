@@ -5,11 +5,16 @@ Open the app at **https://learnstack-taskforge-web.onrender.com** and find bugs 
 **Test credentials:** `bob@taskforge.io` / `Password1!`
 > The submit button is one of the bugs — it looks disabled. Press **Enter** to log in.
 
-Find bugs, then **create one Markdown file per bug** — name them `bug-001.md`, `bug-002.md`, etc. A blank template is already here in `bug-001.md`.
+Find bugs, then **file each one as a GitHub Issue on your fork**. Paste the issue URLs into `submissions.txt`. You need at least **3 bugs** to pass.
 
-You need at least **3 bugs** to pass.
+## How to file a bug report
 
-## Format (GitHub Issue / Jira style)
+1. Go to your fork on GitHub → **Issues** tab → **New Issue** → **Bug Report**
+2. Fill in the title, severity, priority, and all four sections
+3. Click **Submit new issue**
+4. Copy the issue URL and paste it in `submissions.txt`
+
+## Report format
 
 ```markdown
 # [Login] Submit button disabled with valid credentials

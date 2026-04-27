@@ -14,9 +14,15 @@ The billing page lets teams choose a subscription plan, set a seat count, and ap
 - Button states that don't match the app state
 - How plan prices are displayed
 
-## Format (GitHub Issue / Jira style)
+## How to file a bug report
 
-Create one `bug-NNN.md` file per bug. A template is already in `bug-001.md`.
+File each bug as a **GitHub Issue** on your fork, then paste the issue URLs into `submissions.txt`.
+
+1. Go to your fork on GitHub → **Issues** tab → **New Issue** → **Bug Report**
+2. Fill in the title, severity, priority, and all four sections
+3. Submit and paste the URL into `submissions.txt`
+
+## Example report
 
 ```markdown
 # [Billing] Seat count can be decremented to 0

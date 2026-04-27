@@ -6,7 +6,7 @@
 
 ## Your mission
 
-The TaskForge 2.0 team billing / subscription upgrade page has **6 planted bugs**. Find and report them.
+The TaskForge team billing / subscription upgrade page has **6 planted bugs**. Find and report them.
 
 ## The app
 
@@ -25,10 +25,17 @@ What to test:
 - Proceed button — when should it be active vs disabled?
 - Price display — look closely at how prices are formatted
 
-## Deliverable
+## How to file bug reports
 
-Create one `bug-NNN.md` file per bug found in `starter/`. A blank template is in `starter/bug-001.md`.
+1. Go to **your fork** on GitHub
+2. Click the **Issues** tab → **New Issue** → **Bug Report**
+3. Fill in the title, severity/priority, all four sections, and submit
+4. Copy the issue URL and paste it into `starter/submissions.txt` — one URL per line
 
-See `starter/README.md` for the format.
+See Exercise 01's README for the full bug report format.
+
+## How to submit
+
+Open `starter/submissions.txt` and paste your issue URLs there. Push your fork — CI grades automatically.
 
 **Pass threshold: 5/6.**

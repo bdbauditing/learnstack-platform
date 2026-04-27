@@ -4,9 +4,15 @@ Open **https://learnstack-taskforge-web.onrender.com/register** and find 5 bugs.
 
 > No login needed — go directly to `/register`.
 
-Create one Markdown file per bug: `bug-001.md`, `bug-002.md`, etc. A blank template is already in `bug-001.md`.
+File each bug as a **GitHub Issue** on your fork, then paste the issue URLs into `submissions.txt`.
 
-## Format (GitHub Issue / Jira style)
+## How to file a bug report
+
+1. Go to your fork on GitHub → **Issues** tab → **New Issue** → **Bug Report**
+2. Fill in the title, severity, priority, and all four sections
+3. Submit and paste the URL into `submissions.txt`
+
+## Example report
 
 ```markdown
 # [Registration] Email field accepts text without an @ symbol

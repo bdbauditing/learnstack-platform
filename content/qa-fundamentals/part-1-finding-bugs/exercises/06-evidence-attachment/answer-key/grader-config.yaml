@@ -1,4 +1,4 @@
-type: markdown-doc
+type: github-issues
 minFiles: 3
 requiredFrontmatter:
   - title

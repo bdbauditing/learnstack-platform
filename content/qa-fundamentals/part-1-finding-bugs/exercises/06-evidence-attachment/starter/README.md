@@ -1,8 +1,8 @@
 # Starter — Exercise 06: Evidence Attachment
 
-Three bug reports are here with steps already written but no evidence. Add the `## Evidence` section to each file.
+File 3 bug reports as **GitHub Issues** on your fork — each one must include a complete `## Evidence` section. Paste all 3 issue URLs into `submissions.txt`.
 
-Open `bug-001.md`, `bug-002.md`, `bug-003.md` and fill in the evidence for all three.
+See the exercise README for the three bug descriptions to report.
 
 ## Evidence format
 

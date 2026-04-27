@@ -1,0 +1,14 @@
+# Exercise 04 — Fix Bad Reports
+# Read bad-reports/bad-001.md through bad-005.md, then rewrite each as a
+# proper bug report filed as a GitHub Issue on your fork.
+#
+# File 5 GitHub Issues (one per bad report) then paste the URLs below.
+#
+# How to file an issue:
+#   1. Go to your fork on GitHub → Issues tab → New Issue → Bug Report
+#   2. Rewrite the bad report properly and submit
+#   3. Paste the issue URL below (one per line)
+#
+# Example:
+#   https://github.com/yourname/learnstack-qa-track/issues/1
+

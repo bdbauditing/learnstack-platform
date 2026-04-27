@@ -2,7 +2,7 @@
 
 ## Grader Config
 
-- Grader: `markdown-doc`
+- Grader: `github-issues`
 - Required: 5 bug-*.md files in starter/
 - Each file must have: title, severity, priority in frontmatter; all 4 sections with content
 - Pass threshold: all 5 files pass

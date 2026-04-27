@@ -1,6 +1,6 @@
 # Starter — Exercise 05: Write Reports from Scratch
 
-Write 5 complete bug reports — one per file: `bug-001.md` through `bug-005.md`. A blank template is in `bug-001.md`.
+Write 5 complete bug reports and file each one as a **GitHub Issue** on your fork. Paste all 5 issue URLs into `submissions.txt`.
 
 **Bug descriptions to report:**
 1. Bio text field doesn't save changes when clicking Update

@@ -17,6 +17,11 @@ services:
         generateValue: true
       - key: JWT_REFRESH_SECRET
         generateValue: true
+      - key: GITHUB_TOKEN
+        # Create a GitHub Personal Access Token (classic) with public_repo scope.
+        # Used by the grader to fetch GitHub Issues without hitting API rate limits.
+        # https://github.com/settings/tokens → Generate new token → public_repo
+        sync: false
 
   - type: web
     name: learnstack-platform-web

@@ -6,7 +6,7 @@
 
 ## Your mission
 
-This is the Part 1 capstone. TaskForge has **10 planted bugs** across all its pages. Find them and write a professional bug report for each one.
+This is the Part 1 capstone. TaskForge has **10 planted bugs** across all its pages. Find them and file a GitHub Issue for each one.
 
 This is everything from exercises 01–07 combined:
 - Find the bugs (01–03 skills)
@@ -23,13 +23,17 @@ This is everything from exercises 01–07 combined:
 
 **Pages to test:** `/login`, `/register`, `/tasks`, `/billing`, `/profile`
 
-## Deliverable
+## How to file bug reports
 
-Create one `bug-NNN.md` file per bug found in `starter/`. A template is in `starter/bug-001.md`.
+For each bug found:
+1. Go to **your fork** on GitHub → **Issues** → **New Issue** → **Bug Report**
+2. Fill in title, severity/priority, all four sections, AND the `## Evidence` section
+3. Submit and copy the issue URL
+4. Paste all your URLs into `starter/submissions.txt` — one per line
 
-Each report must include the `## Evidence` section (screenshot + console + network). **You need 8/10 to pass.**
+**You need 8/10 to pass.**
 
-## Format
+## Report format (including Evidence)
 
 ```markdown
 # [Login] Submit button disabled with valid credentials
@@ -70,8 +74,12 @@ Submit button remains visually disabled even with valid credentials.
 
 ## Scoring
 
-Each matched bug is counted as pass. To be counted:
+Each matched bug counts as a pass. To be counted:
 - Your report must mention the right page (login, registration, tasks, billing, profile)
 - Your report must contain the right keywords for that bug
 
 Get 8 or more → PASS.
+
+## How to submit
+
+Open `starter/submissions.txt` and paste your issue URLs. Push your fork — CI grades automatically.

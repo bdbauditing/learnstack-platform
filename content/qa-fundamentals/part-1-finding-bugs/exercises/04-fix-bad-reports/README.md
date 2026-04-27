@@ -1,14 +1,14 @@
 # Exercise 04 — Fix 5 Bad Bug Reports
 
 **Time:** ~30 minutes
-**Grader:** markdown-doc
+**Grader:** github-issues
 **Pass threshold:** All 5 rewrites must pass structural validation
 
 ## Your mission
 
 Five terrible bug reports are in `starter/bad-reports/`. Each one is missing critical information, has vague steps, or has reversed expected/actual.
 
-Rewrite each one as a proper bug report in the standard format.
+Read each bad report, then rewrite it properly and file it as a **GitHub Issue** on your fork.
 
 ## The bad reports
 
@@ -27,21 +27,46 @@ Rewrite each one as a proper bug report in the standard format.
 - Empty environment — developer can't reproduce without knowing browser + OS
 - Vague title — "Login broken" tells you nothing; "[Login] Submit button remains disabled with valid credentials" does
 
-## Deliverable
+## How to file your rewrites
 
-Create 5 files named `bug-001.md` through `bug-005.md` in `starter/`. Each is your rewritten version of the corresponding bad report.
+For each bad report:
+1. Read `bad-reports/bad-NNN.md` and identify all the problems
+2. Go to **your fork** on GitHub → **Issues** → **New Issue** → **Bug Report**
+3. Rewrite it properly — specific title, correct sections, real steps, right expected/actual
+4. Submit the issue and copy the URL
+5. Paste all 5 URLs into `starter/submissions.txt` — one per line
 
-A blank template is in `starter/bug-001.md`.
+### Required format
 
-Each rewritten report must have:
-- A specific title in frontmatter (not vague — say exactly what's broken and where)
-- `severity` and `priority` filled in
-- All 4 sections with real content:
-  - `## Environment` — browser, OS, viewport, URL
-  - `## Steps to Reproduce` — numbered, specific, reproducible
-  - `## Expected Behavior` — what should happen
-  - `## Actual Behavior` — what actually happens (not what should happen)
+```markdown
+# [Login] Submit button remains disabled with valid credentials
+
+**Severity:** High
+**Priority:** High
+
+## Environment
+
+- **Browser:** Chrome 130
+- **OS:** macOS 14
+- **Viewport:** 1440x900
+- **URL:** https://learnstack-taskforge-web.onrender.com/login
+
+## Steps to Reproduce
+
+1. Navigate to /login
+2. Enter bob@taskforge.io in the Email field
+3. Enter Password1! in the Password field
+4. Click the Submit button
+
+## Expected Behavior
+
+The Submit button becomes enabled and clicking it logs the user in.
+
+## Actual Behavior
+
+The Submit button remains visually disabled even with valid credentials entered.
+```
 
 ## How to submit
 
-Push your `bug-001.md` through `bug-005.md` files to your fork. CI grades them automatically.
+Open `starter/submissions.txt` and paste your 5 issue URLs. Push your fork — CI grades automatically.

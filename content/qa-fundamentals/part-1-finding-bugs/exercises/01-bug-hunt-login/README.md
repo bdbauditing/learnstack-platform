@@ -6,7 +6,7 @@
 
 ## Your mission
 
-The TaskForge login page has **4 planted bugs**. Find them and file a proper bug report for each one.
+The TaskForge login page has **4 planted bugs**. Find them and file a GitHub Issue for each one.
 
 ## The app
 
@@ -27,11 +27,13 @@ What to test:
 - Field validation messages
 - Password visibility toggle
 
-## Deliverable
+## How to file bug reports
 
-Create one Markdown file per bug found, named `bug-001.md`, `bug-002.md`, etc. inside `starter/`.
-
-A template is provided in `starter/bug-001.md`. Copy it for each additional bug.
+1. Go to **your fork** on GitHub
+2. Click the **Issues** tab → **New Issue** → **Bug Report**
+3. Fill in the title, severity/priority, all four sections, and submit
+4. Copy the issue URL (e.g. `https://github.com/yourname/learnstack-qa-track/issues/3`)
+5. Paste it into `starter/submissions.txt` — one URL per line
 
 ### Bug report format
 
@@ -64,10 +66,10 @@ The Submit button becomes enabled after both fields are filled and clicking it l
 The Submit button remains visually disabled even with valid credentials entered.
 ```
 
-> **Why this format?** This is how GitHub Issues bug reports actually look. The H1 heading = GitHub issue title = Jira Summary. `**Severity:**` / `**Priority:**` = Jira fields (dropdown in the real UI). The sections = standard fields in every bug tracker.
+> **Why this format?** H1 heading = GitHub issue title. `**Severity:**` / `**Priority:**` = Jira fields. The sections map to standard fields in every bug tracker.
 
 ## How to submit
 
-Push your completed `bug-*.md` files to your fork. CI will grade it automatically.
+Open `starter/submissions.txt` and paste your issue URLs there. Push your fork — CI grades automatically.
 
 **You need 3/4 bugs to pass.**

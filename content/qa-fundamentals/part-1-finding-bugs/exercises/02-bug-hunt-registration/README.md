@@ -6,7 +6,7 @@
 
 ## Your mission
 
-The TaskForge registration page has **5 planted bugs**. Find them and file a bug report for each.
+The TaskForge registration page has **5 planted bugs**. Find them and file a GitHub Issue for each one.
 
 ## The app
 
@@ -22,12 +22,17 @@ What to test:
 - Terms checkbox behavior
 - What happens after successful registration
 
-## Deliverable
+## How to file bug reports
 
-Create one `bug-NNN.md` file per bug found in `starter/`. A blank template is in `starter/bug-001.md`. Copy it for each additional bug.
+1. Go to **your fork** on GitHub
+2. Click the **Issues** tab → **New Issue** → **Bug Report**
+3. Fill in the title, severity/priority, all four sections, and submit
+4. Copy the issue URL and paste it into `starter/submissions.txt` — one URL per line
 
-See `starter/README.md` for the full format guide.
+See Exercise 01's README for the full bug report format.
 
 ## How to submit
 
-Push your fork. CI grades automatically. **Pass threshold: 4/5.**
+Open `starter/submissions.txt` and paste your issue URLs there. Push your fork — CI grades automatically.
+
+**Pass threshold: 4/5.**

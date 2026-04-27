@@ -2,7 +2,7 @@
 
 ## Grader Config
 
-- Grader: `markdown-doc`
+- Grader: `github-issues`
 - Required: 3 bug-*.md files in starter/ (pre-filled, add evidence only)
 - Each file must have: all 4 standard sections + ## Evidence section
 - Evidence checks: screenshot filename, console snippet, network request

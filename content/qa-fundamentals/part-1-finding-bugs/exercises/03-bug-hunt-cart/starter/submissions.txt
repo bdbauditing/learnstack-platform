@@ -1,0 +1,10 @@
+# File each bug as a GitHub Issue on your fork, then paste the URL here.
+#
+# How to file an issue:
+#   1. Go to your fork on GitHub → Issues tab → New Issue → Bug Report
+#   2. Fill in the template and submit
+#   3. Paste the issue URL below (one per line)
+#
+# Example:
+#   https://github.com/yourname/learnstack-qa-track/issues/1
+

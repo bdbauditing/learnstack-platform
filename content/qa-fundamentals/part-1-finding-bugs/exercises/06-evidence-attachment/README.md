@@ -1,27 +1,33 @@
 # Exercise 06 — Evidence Attachment
 
 **Time:** ~25 minutes
-**Grader:** markdown-doc
+**Grader:** github-issues
 **Pass threshold:** All 3 reports include all 3 evidence types
 
 ## Your mission
 
-Three bug reports are provided in `starter/` with steps already written but no evidence. Add an `## Evidence` section to each one.
+Three bug descriptions are given below — reports that need evidence added. File each one as a **GitHub Issue** on your fork, including a complete `## Evidence` section.
 
-## Deliverable
+## The three bugs to report
 
-Edit `bug-001.md`, `bug-002.md`, and `bug-003.md` in `starter/` — add the evidence section to each.
+**Bug A — Login submit button disabled**
+The login submit button stays visually disabled even after both email and password fields are filled. Users must press Enter to submit.
 
-The `## Evidence` section requires all three:
-1. **Screenshot** — the filename of a screenshot you'd take (e.g. `login-submit-disabled-chrome130.png`)
-2. **Console** — the relevant error line from DevTools Console (paste the actual text)
-3. **Network** — the failing request + response status from DevTools Network tab
+**Bug B — Seat count drops to zero**
+On the billing page, clicking the minus (-) button on the seat count continues past 1 down to 0, which shows a $0 total.
 
-You don't need to take a real screenshot — just write a realistic filename and paste a plausible console/network snippet.
+**Bug C — Bio not saved on profile**
+On the profile page, editing the bio field and clicking Update appears to succeed but the text reverts to the original value on reload.
 
-## Evidence format
+## How to file each issue
 
-Add this section at the bottom of each bug file:
+1. Go to **your fork** on GitHub → **Issues** → **New Issue** → **Bug Report**
+2. Fill in all four standard sections (Environment, Steps to Reproduce, Expected, Actual)
+3. Add an `## Evidence` section at the bottom (see format below)
+4. Submit and copy the URL
+5. Paste all 3 URLs into `starter/submissions.txt` — one per line
+
+## Evidence section format
 
 ```markdown
 ## Evidence
@@ -39,8 +45,17 @@ Add this section at the bottom of each bug file:
 |-------|--------------|-------------------|
 | Screenshot | Filename with `.png` or `.jpg` | DevTools → right-click → Save as screenshot |
 | Console | The error line (not the full log) | DevTools → Console tab |
-| Network | Method, path, status code | DevTools → Network tab → click the failing request |
+| Network | Method + path + status code | DevTools → Network tab → click the failing request |
+
+You don't need to take a real screenshot — write a realistic filename and paste a plausible console/network snippet. The grader checks:
+- **Screenshot:** ends with `.png` or `.jpg`
+- **Console:** at least 10 characters
+- **Network:** contains `/api/` or `http` AND a 3-digit status code
 
 ## Why this matters
 
 A bug report without evidence is your word against the developer's. A report with a screenshot + console error + network dump is nearly impossible to dismiss — and it cuts the time-to-fix in half.
+
+## How to submit
+
+Open `starter/submissions.txt` and paste your 3 issue URLs. Push your fork — CI grades automatically.

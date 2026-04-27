@@ -76,25 +76,23 @@ function gradeBugMatch(submittedTexts: string[], answerKey: BugMatchAnswerKey) {
 }
 
 // ---------------------------------------------------------------------------
-// Markdown-doc grader  (validates bug-*.md structure)
+// GitHub Issues grader  (fetches real issues via API, validates structure)
 // ---------------------------------------------------------------------------
 
-interface MarkdownDocConfig {
-  type: 'markdown-doc';
-  minFiles: number;
+interface GitHubIssuesConfig {
+  type: 'github-issues' | 'markdown-doc'; // markdown-doc kept as alias
+  minFiles: number;   // minimum number of issues required
   requiredSections: string[];
   requiredFrontmatter?: string[];
   requireEvidence?: boolean;
-  passThreshold: number; // fraction 0–1 of files that must pass
+  passThreshold: number;
 }
 
-// Extract meta from plain Markdown: H1 for title, **Key:** Value for fields
+// Extract meta from plain Markdown: H1 for title, **Key:** Value for inline fields
 function parseMarkdownMeta(content: string): Record<string, string> {
   const meta: Record<string, string> = {};
-  // H1 heading → title
   const h1 = content.match(/^#\s+(.+)/m);
   if (h1) meta['title'] = h1[1].trim();
-  // **Key:** Value (inline bold-label fields)
   const inlineRe = /\*\*([A-Za-z][\w\s]*):\*\*\s*(.+)/g;
   let m: RegExpExecArray | null;
   while ((m = inlineRe.exec(content)) !== null) {
@@ -103,78 +101,116 @@ function parseMarkdownMeta(content: string): Record<string, string> {
   return meta;
 }
 
-function gradeMarkdownDoc(starterDir: string, answerDir: string) {
+function validateIssueBody(issueTitle: string, issueBody: string, config: GitHubIssuesConfig): { passed: boolean; reason: string } {
+  // Combine title as H1 + body so parseMarkdownMeta can pick up both
+  const content = `# ${issueTitle}\n\n${issueBody}`;
+  const meta = parseMarkdownMeta(content);
+  const problems: string[] = [];
+
+  for (const field of config.requiredFrontmatter ?? []) {
+    const val = meta[field]?.trim() ?? '';
+    // Skip template placeholder values
+    if (!val || val.startsWith('<!--') || val === 'Critical / High / Medium / Low' || val === 'High / Medium / Low') {
+      problems.push(`"${field}" is missing or not filled in`);
+    }
+  }
+
+  for (const heading of config.requiredSections ?? []) {
+    const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+    const sectionRegex = new RegExp(`${escaped}\\s*\\n+([\\s\\S]*?)(?=\\n##|$)`, 'i');
+    const match = content.match(sectionRegex);
+    const body = match?.[1]?.replace(/<!--[\s\S]*?-->/g, '').trim() ?? '';
+    if (!match || body.length < 10) {
+      problems.push(`Section "${heading}" is missing or has no content`);
+    }
+  }
+
+  if (config.requireEvidence) {
+    const evMatch = content.match(/##\s+Evidence([\s\S]*?)(?=\n##|$)/i);
+    if (!evMatch) {
+      problems.push('## Evidence section is missing');
+    } else {
+      const ev = evMatch[1];
+      if (!/screenshot[^\n]*:[^\n]{3,}/i.test(ev)) problems.push('Evidence: screenshot reference missing');
+      if (!/console[^\n]*:[^\n]{10,}/i.test(ev)) problems.push('Evidence: console log missing or too short');
+      if (!/network[^\n]*:[^\n]{10,}/i.test(ev)) problems.push('Evidence: network request missing or too short');
+    }
+  }
+
+  return { passed: problems.length === 0, reason: problems.length === 0 ? 'OK' : problems.join('; ') };
+}
+
+function readSubmissionUrls(starterDir: string): string[] {
+  const txt = path.join(starterDir, 'submissions.txt');
+  if (!fs.existsSync(txt)) return [];
+  return fs.readFileSync(txt, 'utf8')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#') && /github\.com\/[^/]+\/[^/]+\/issues\/\d+/.test(l));
+}
+
+async function fetchGitHubIssues(urls: string[]): Promise<Array<{ url: string; title: string; body: string }>> {
+  const token = process.env.GITHUB_TOKEN;
+  const results: Array<{ url: string; title: string; body: string }> = [];
+
+  for (const url of urls) {
+    const match = url.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
+    if (!match) continue;
+    const [, owner, repo, number] = match;
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/issues/${number}`;
+    const headers: Record<string, string> = {
+      'Accept': 'application/vnd.github+json',
+      'User-Agent': 'learnstack-grader/1.0',
+    };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(apiUrl, { headers });
+    if (!res.ok) {
+      throw new Error(
+        `GitHub API returned ${res.status} for ${url}.\n` +
+        `Make sure your fork is public and the issue number is correct.`,
+      );
+    }
+    const data = await res.json() as { title: string; body: string | null };
+    results.push({ url, title: data.title, body: data.body ?? '' });
+  }
+
+  return results;
+}
+
+async function gradeGitHubIssues(starterDir: string, answerDir: string) {
   const configPath = path.join(answerDir, 'grader-config.yaml');
   if (!fs.existsSync(configPath)) {
     throw new Error('grader-config.yaml not found in answer-key. Contact your instructor.');
   }
-  const config = yaml.load(fs.readFileSync(configPath, 'utf8')) as MarkdownDocConfig;
+  const config = yaml.load(fs.readFileSync(configPath, 'utf8')) as GitHubIssuesConfig;
 
-  const bugFiles = fs
-    .readdirSync(starterDir)
-    .filter((f) => /^bug-\d+\.md$/i.test(f))
-    .sort();
-
-  if (bugFiles.length < config.minFiles) {
+  const urls = readSubmissionUrls(starterDir);
+  if (urls.length < config.minFiles) {
     return {
-      type: 'markdown-doc',
+      type: 'github-issues',
       passed: false,
       score: 0,
-      details: [
-        {
-          file: '(none)',
-          passed: false,
-          reason: `Need at least ${config.minFiles} bug-*.md file(s); found ${bugFiles.length}`,
-        },
-      ],
+      details: [{
+        url: '(none)',
+        passed: false,
+        reason: `Need at least ${config.minFiles} issue URL(s) in submissions.txt; found ${urls.length}`,
+      }],
     };
   }
 
-  const fileResults = bugFiles.map((filename) => {
-    const content = fs.readFileSync(path.join(starterDir, filename), 'utf8');
-    const meta = parseMarkdownMeta(content);
-    const issues: string[] = [];
+  const issues = await fetchGitHubIssues(urls);
 
-    // Required meta fields (H1 title + inline **Field:** Value)
-    for (const field of config.requiredFrontmatter ?? []) {
-      const val = meta[field]?.trim() ?? '';
-      if (!val) {
-        issues.push(`"${field}" is missing or empty — add it as **${field.charAt(0).toUpperCase() + field.slice(1)}:** value or an H1 heading`);
-      }
-    }
-
-    // Required sections (heading + at least 10 chars of content)
-    for (const heading of config.requiredSections ?? []) {
-      const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
-      const sectionRegex = new RegExp(`${escaped}\\s*\\n+([\\s\\S]*?)(?=\\n##|$)`, 'i');
-      const match = content.match(sectionRegex);
-      const body = match?.[1]?.trim() ?? '';
-      if (!match || body.length < 10) {
-        issues.push(`Section "${heading}" is missing or has no content`);
-      }
-    }
-
-    // Evidence validation
-    if (config.requireEvidence) {
-      const evMatch = content.match(/##\s+Evidence([\s\S]*?)(?=\n##|$)/i);
-      if (!evMatch) {
-        issues.push('## Evidence section is missing');
-      } else {
-        const ev = evMatch[1];
-        if (!/screenshot[^\n]*:[^\n]{3,}/i.test(ev)) issues.push('Evidence: screenshot reference missing');
-        if (!/console[^\n]*:[^\n]{10,}/i.test(ev)) issues.push('Evidence: console log snippet missing or too short');
-        if (!/network[^\n]*:[^\n]{10,}/i.test(ev)) issues.push('Evidence: network request missing or too short');
-      }
-    }
-
-    return { file: filename, passed: issues.length === 0, reason: issues.length === 0 ? 'OK' : issues.join('; ') };
+  const details = issues.map((issue) => {
+    const result = validateIssueBody(issue.title, issue.body, config);
+    return { url: issue.url, title: issue.title, ...result };
   });
 
-  const passedCount = fileResults.filter((r) => r.passed).length;
-  const score = bugFiles.length > 0 ? passedCount / bugFiles.length : 0;
-  const passed = score >= (config.passThreshold ?? 1.0) && bugFiles.length >= config.minFiles;
+  const passedCount = details.filter((d) => d.passed).length;
+  const score = issues.length > 0 ? passedCount / issues.length : 0;
+  const passed = score >= (config.passThreshold ?? 1.0) && issues.length >= config.minFiles;
 
-  return { type: 'markdown-doc', passed, score, details: fileResults };
+  return { type: 'github-issues', passed, score, details };
 }
 
 // ---------------------------------------------------------------------------
@@ -312,7 +348,7 @@ function gradeStructuredDoc(starterDir: string, answerDir: string) {
 // Grader type detection
 // ---------------------------------------------------------------------------
 
-type GraderType = 'bug-match' | 'test-runner' | 'structured-doc' | 'markdown-doc' | 'unsupported';
+type GraderType = 'bug-match' | 'test-runner' | 'structured-doc' | 'github-issues' | 'unsupported';
 
 function detectGraderType(trackSlug: string, partSlug: string, exerciseSlug: string): GraderType {
   const specPath = path.join(TRACKS_DIR, trackSlug, partSlug, 'exercises', exerciseSlug, 'spec.md');
@@ -321,7 +357,7 @@ function detectGraderType(trackSlug: string, partSlug: string, exerciseSlug: str
   const match = spec.match(/[-*]\s+Grader:\s+`?([a-z-]+)`?/i);
   const grader = match?.[1]?.toLowerCase() ?? '';
   if (grader.includes('bug-match')) return 'bug-match';
-  if (grader.includes('markdown-doc')) return 'markdown-doc';
+  if (grader.includes('github-issues') || grader.includes('markdown-doc')) return 'github-issues';
   if (grader.includes('test-runner')) return 'test-runner';
   if (grader.includes('structured-doc')) return 'structured-doc';
   return 'unsupported';
@@ -396,23 +432,24 @@ export async function runGrader(submissionId: string): Promise<void> {
       );
       if (!fs.existsSync(answerKeyPath)) throw new Error('Answer key not found. Contact your instructor.');
 
-      const bugFiles = fs.readdirSync(starterDir).filter((f) => /^bug-\d+\.md$/i.test(f)).sort();
-      if (bugFiles.length === 0) {
+      const urls = readSubmissionUrls(starterDir);
+      if (urls.length === 0) {
         throw new Error(
-          'No bug-*.md files found in starter/ of your fork.\n' +
-          'Create one Markdown file per bug (e.g. bug-001.md, bug-002.md).',
+          'No GitHub Issue URLs found in submissions.txt.\n' +
+          'File your bug reports as GitHub Issues on your fork, then paste the URLs in starter/submissions.txt.',
         );
       }
-      const submittedTexts = bugFiles.map((f) => fs.readFileSync(path.join(starterDir, f), 'utf8'));
+      const issues = await fetchGitHubIssues(urls);
+      const submittedTexts = issues.map((i) => `${i.title}\n${i.body}`);
       const answerKey = yaml.load(fs.readFileSync(answerKeyPath, 'utf8')) as BugMatchAnswerKey;
       const result = gradeBugMatch(submittedTexts, answerKey);
       graderOutput = { type: 'bug-match', result };
       score = result.matched / result.expected;
       passed = result.passed;
 
-    } else if (graderType === 'markdown-doc') {
+    } else if (graderType === 'github-issues') {
       const answerDir = path.join(TRACKS_DIR, trackSlug, partSlug, 'exercises', exerciseSlug, 'answer-key');
-      const result = gradeMarkdownDoc(starterDir, answerDir);
+      const result = await gradeGitHubIssues(starterDir, answerDir);
       graderOutput = result;
       score = result.score;
       passed = result.passed;

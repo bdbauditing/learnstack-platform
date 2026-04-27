@@ -1,0 +1,15 @@
+# Exercise 06 — Evidence Attachment
+# Three pre-written bug reports are below (read them in the README).
+# File each one as a GitHub Issue — but include the ## Evidence section
+# with screenshot, console, and network entries filled in.
+#
+# File 3 GitHub Issues then paste the URLs here.
+#
+# How to file an issue:
+#   1. Go to your fork on GitHub → Issues tab → New Issue → Bug Report
+#   2. Copy the pre-written bug from the README, add Evidence section, submit
+#   3. Paste the issue URL below
+#
+# Example:
+#   https://github.com/yourname/learnstack-qa-track/issues/1
+

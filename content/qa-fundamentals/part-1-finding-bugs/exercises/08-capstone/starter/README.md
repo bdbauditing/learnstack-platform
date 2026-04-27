@@ -16,11 +16,11 @@ Explore **https://learnstack-taskforge-web.onrender.com**. Find 10 bugs across a
 | Billing | /billing | Seat count controls, promo code, price display |
 | Profile | /profile | Bio save, avatar upload, field validation |
 
-## Create one file per bug
+## File one GitHub Issue per bug
 
-Name your files `bug-001.md`, `bug-002.md`, etc. A template is in `bug-001.md`.
+Go to your fork → **Issues** → **New Issue** → **Bug Report** for each bug. Paste all issue URLs into `submissions.txt`.
 
-Each report must include:
+Each issue must include:
 - H1 heading `# [Area] description` — the bug title
 - `**Severity:**` and `**Priority:**` inline fields
 - `## Environment` — browser, OS, viewport, URL
@@ -31,10 +31,10 @@ Each report must include:
 
 ## Pre-submit checklist
 
-- [ ] 10 `bug-*.md` files in this folder
-- [ ] Every report has a specific title with `[Area]` prefix
-- [ ] Every report has severity and priority filled in
-- [ ] Every environment table is complete (browser, OS, viewport, URL)
+- [ ] 10 issue URLs in `submissions.txt`
+- [ ] Every issue has a specific title with `[Area]` prefix
+- [ ] Every issue has severity and priority filled in
+- [ ] Every environment is complete (browser, OS, viewport, URL)
 - [ ] Every Steps to Reproduce has at least 3 numbered steps
 - [ ] Every Expected/Actual Behavior has meaningful content
 - [ ] Every `## Evidence` section has screenshot, console, and network entries
