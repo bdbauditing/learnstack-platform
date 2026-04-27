@@ -1,31 +1,34 @@
 # Exercise 06 Spec — Evidence Attachment
 
-## Validation Rules
-- `evidence.screenshot`: must be a non-empty filename ending in .png or .jpg
-- `evidence.console`: must contain an error signature (at least 10 chars)
-- `evidence.network`: must contain a URL and a status code
-
 ## Grader Config
-- Grader: structured-doc (validate evidence fields in bugs-with-evidence.yaml)
-- All 3 evidence types required per report
-- All 3 reports must pass
+
+- Grader: `markdown-doc`
+- Required: 3 bug-*.md files in starter/ (pre-filled, add evidence only)
+- Each file must have: all 4 standard sections + ## Evidence section
+- Evidence checks: screenshot filename, console snippet, network request
+- Pass threshold: all 3 files pass
+
+## Validation Rules
+
+### ## Evidence section
+Must contain:
+- **Screenshot:** — a filename ending in .png or .jpg
+- **Console:** — at least 10 characters (the relevant error line)
+- **Network:** — at least 10 characters mentioning a URL path and HTTP status code
 
 ## Detailed Validation Logic
 
 ### screenshot
-- Non-empty string
-- Ends with `.png` or `.jpg` (case-insensitive)
-- Does not need to be a real file
+- Non-empty string, ends with `.png` or `.jpg` (case-insensitive)
 
 ### console
 - Non-empty string, minimum 10 characters
-- Should look like a real console message (error type, file reference, or message text)
-- Accept any non-empty string ≥ 10 chars (generous — learners are writing plausible errors)
+- Accept any non-empty string ≥ 10 chars
 
 ### network
-- Must contain a path fragment starting with `/api/` or a full URL containing `http`
-- Must contain a 3-digit HTTP status code (e.g. 200, 404, 500, 422)
-- Pattern: `(GET|POST|PUT|DELETE|PATCH)\s+\S+\s*→\s*\d{3}` or similar
+- Must mention a path starting with /api/ or contain http
+- Must contain a 3-digit HTTP status code
 
 ## Notes for Grader Authors
-Be generous. The learning objective is that learners understand WHAT evidence to include, not that they format it perfectly. If the three fields are present and non-empty, give benefit of the doubt.
+
+Be generous. The learning objective is that learners understand WHAT evidence to include, not that they format it perfectly.

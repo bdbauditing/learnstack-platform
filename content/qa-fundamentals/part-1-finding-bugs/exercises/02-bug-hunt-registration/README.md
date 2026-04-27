@@ -6,25 +6,27 @@
 
 ## Your mission
 
-A registration form has **5 planted bugs**. Find and report them in `bugs.yaml`.
+The TaskForge registration page has **5 planted bugs**. Find them and file a bug report for each.
 
 ## The app
 
-**https://learnstack-taskforge-web.onrender.com** — navigate to the registration page (no login needed for this exercise).
+**https://learnstack-taskforge-web.onrender.com** — go directly to `/register` (no login needed).
 
-> **Can't see a Register link?** Go directly to `/register`. If you need to test the logged-in flow, use `bob@taskforge.io` / `Password1!` and press **Enter** to log in (the submit button is a known bug).
+> If you need to test a logged-in flow, use `bob@taskforge.io` / `Password1!` and press **Enter** to log in (the submit button is a known bug from Exercise 01).
 
 What to test:
 - All required fields (name, email, password, confirm password)
-- Password strength validation
+- Password strength indicator
 - Email format validation
-- Submit with duplicate email
+- Submit with a duplicate email (one that already has an account)
 - Terms checkbox behavior
-- Success redirect
+- What happens after successful registration
 
 ## Deliverable
 
-Fill in `starter/bugs.yaml` with at least 4 bug reports.
+Create one `bug-NNN.md` file per bug found in `starter/`. A blank template is in `starter/bug-001.md`. Copy it for each additional bug.
+
+See `starter/README.md` for the full format guide.
 
 ## How to submit
 

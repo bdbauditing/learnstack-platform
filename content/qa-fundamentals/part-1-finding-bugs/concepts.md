@@ -121,3 +121,76 @@ A bug report that cannot be reproduced is a bug report that will not be fixed. E
 Without all four, a developer cannot reproduce the bug. They cannot fix what they cannot see.
 
 **"Works on my machine"** from a developer is not a dismissal — it's a data point. It means the bug is environment-specific. Your job is to narrow down *what is different* between your environment and theirs. Add more detail. Compare OS versions, browser versions, user accounts, data states. The bug is still real.
+
+---
+
+## 9. The Real Bug Report Format
+
+In real companies, bug reports live in **Jira**, **GitHub Issues**, **Linear**, or **Bugzilla**. The fields differ slightly by tool but map to the same structure.
+
+In this course, you write bug reports as **Markdown files** — the same format GitHub uses for Issue templates. Here's how the fields map:
+
+| This course (Markdown) | Jira | GitHub Issues |
+|------------------------|------|---------------|
+| `title` (frontmatter) | Summary | Issue title |
+| `severity` (frontmatter) | Severity (custom field) | Label |
+| `priority` (frontmatter) | Priority | Label |
+| `## Environment` | Environment (custom field) | Environment section |
+| `## Steps to Reproduce` | Steps to Reproduce | Steps to Reproduce section |
+| `## Expected Behavior` | Expected Result | Expected Behavior section |
+| `## Actual Behavior` | Actual Result | Actual Behavior section |
+| `## Evidence` | Attachments | Attached files + inline images |
+
+### What a good report looks like
+
+```markdown
+---
+title: "[Login] Submit button disabled with valid credentials"
+severity: High
+priority: High
+---
+
+## Environment
+
+| Field    | Value |
+|----------|-------|
+| Browser  | Chrome 130 |
+| OS       | macOS 14 |
+| Viewport | 1440x900 |
+| URL      | https://app.example.com/login |
+
+## Steps to Reproduce
+
+1. Navigate to /login
+2. Enter a valid email in the Email field
+3. Enter a valid password in the Password field
+4. Observe the Submit button state
+
+## Expected Behavior
+
+The Submit button becomes enabled after both fields contain valid input, and clicking it logs the user in.
+
+## Actual Behavior
+
+The Submit button remains visually disabled (grayed out) even with valid credentials in both fields. Pressing Enter still submits the form, which is a separate workaround — not correct behavior.
+
+## Evidence
+
+**Screenshot:** login-submit-disabled-chrome130.png
+
+**Console:** TypeError: Cannot read properties of null (reading 'addEventListener') at login.js:47
+
+**Network:** POST /api/auth/login → 422 Unprocessable Entity | Body: {"error": "validation_failed"}
+```
+
+### Why Markdown?
+
+Jira, GitHub Issues, and Linear all render Markdown. Learning to write bug reports in Markdown means you can file them in any tool your future employer uses without changing anything but where you paste.
+
+### Evidence: the secret weapon
+
+A bug report without evidence is your word against the developer's. A report with a screenshot + console error + network dump is nearly impossible to dismiss. Evidence also cuts time-to-fix: the developer sees exactly what went wrong without spending 30 minutes trying to reproduce it.
+
+- **Screenshot** — Take it with DevTools open so the developer can see the console state too. Name it descriptively: `login-submit-disabled-chrome130.png`, not `screenshot.png`.
+- **Console** — Copy the relevant error line(s) from DevTools → Console. Look for `TypeError`, `ReferenceError`, `Uncaught`, or network failures.
+- **Network** — In DevTools → Network tab, click the failing request and copy the method, path, and response status. Include the response body if it contains an error message.

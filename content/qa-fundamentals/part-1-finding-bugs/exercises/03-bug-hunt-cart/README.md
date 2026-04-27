@@ -27,4 +27,8 @@ What to test:
 
 ## Deliverable
 
-`starter/bugs.yaml` with at least 5 bug reports. **Pass threshold: 5/6.**
+Create one `bug-NNN.md` file per bug found in `starter/`. A blank template is in `starter/bug-001.md`.
+
+See `starter/README.md` for the format.
+
+**Pass threshold: 5/6.**

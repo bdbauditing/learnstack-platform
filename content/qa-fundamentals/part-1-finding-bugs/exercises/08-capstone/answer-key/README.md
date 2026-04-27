@@ -1,52 +1,45 @@
 # Grader Notes — Exercise 08 Capstone
 
-Two-stage grading:
-1. bug-match: 8/10 must have location + keyword match
-2. structured-doc: each matched report must have non-empty evidence (screenshot, console, network) and correct severity/priority (±1 tolerance)
+**Grader:** bug-match (reads `bug-*.md` files)
 
-Both stages must pass. A bug that matches the answer key but has no evidence counts as a FAIL.
+The grader reads all `bug-*.md` files from the learner's `starter/` directory, extracts the full text of each, and matches against the 10 planted bugs in `bugs-expected.yaml`.
 
-Common failure mode: learners find the bugs but don't attach evidence. Coach them to fill in the evidence section even with plausible placeholder values.
+Pass threshold: 8 out of 10.
+
+## Matching logic
+
+For each planted bug, the grader checks:
+1. The file text contains the location keyword (e.g. "login", "registration", "tasks", "billing", "profile")
+2. The file text matches ≥40% of the signature keywords
 
 ## Per-bug grading notes
 
-**BUG-001 (login/submit disabled)**
-Location match: "login" (any contains match).
-Keywords: "button" + "disabled" in title, actual, or steps.
+**BUG-001 (login — submit disabled)**
+Location: text contains "login". Keywords: "button" + "disabled".
 
-**BUG-002 (login/password plain text)**
-Location match: "login".
-Keywords: "password" + ("plain" OR "text" OR "visible" OR "unmasked").
+**BUG-002 (login — password plain text)**
+Location: "login". Keywords: "password" + ("plain" OR "visible").
 
-**BUG-003 (registration/invalid email)**
-Location match: "registration".
-Keywords: "email" + ("invalid" OR "format" OR "validation").
+**BUG-003 (registration — invalid email)**
+Location: "registration". Keywords: "email" + ("invalid" OR "format").
 
-**BUG-004 (registration/500 duplicate email)**
-Location match: "registration".
-Keywords: "email" + ("500" OR "server error" OR "duplicate" OR "existing").
+**BUG-004 (registration — 500 duplicate email)**
+Location: "registration". Keywords: "email" + ("duplicate" OR "error").
 
-**BUG-005 (cart/total)**
-Location match: "cart".
-Keywords: "total" + ("update" OR "quantity" OR "change" OR "stale").
+**BUG-005 (tasks — blank title)**
+Location: "tasks". Keywords: "task" + ("blank" OR "title" OR "empty").
 
-**BUG-006 (cart/coupon)**
-Location match: "cart".
-Keywords: "coupon" + ("100" OR "free" OR "discount" OR "wrong percent").
-This is a Critical bug — if learner rates it High instead of Critical, ±1 tolerance applies and it still passes.
+**BUG-006 (tasks — completed shows in active)**
+Location: "tasks". Keywords: "task" + ("completed" OR "active" OR "filter").
 
-**BUG-007 (checkout/credit card)**
-Location match: "checkout".
-Keywords: "credit" OR "card" + ("letter" OR "alpha" OR "text" OR "invalid").
+**BUG-007 (billing — seat count to 0)**
+Location: "billing". Keywords: "seat" + ("zero" OR "minimum" OR "decrement").
 
-**BUG-008 (checkout/email confirmation)**
-Location match: "checkout".
-Keywords: "email" + ("confirmation" OR "order" OR "not sent" OR "not received").
+**BUG-008 (billing — promo 100% discount)**
+Location: "billing". Keywords: "promo" + ("discount" OR "percent" OR "code").
 
-**BUG-009 (profile/bio save)**
-Location match: "profile".
-Keywords: "bio" OR "save" + "profile" OR "update".
+**BUG-009 (profile — bio not saved)**
+Location: "profile". Keywords: "bio" + ("save" OR "update").
 
-**BUG-010 (profile/avatar .exe)**
-Location match: "profile".
-Keywords: "avatar" OR "upload" + ("exe" OR "file type" OR "extension" OR "malicious").
+**BUG-010 (profile — avatar any file type)**
+Location: "profile". Keywords: "avatar" + ("upload" OR "file" OR "exe").

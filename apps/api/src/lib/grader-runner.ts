@@ -12,7 +12,7 @@ const CONTENT_ROOT =
 const TRACKS_DIR = path.join(CONTENT_ROOT, 'content');
 
 // ---------------------------------------------------------------------------
-// Bug-match grader
+// Bug-match grader  (reads bug-*.md files, not bugs.yaml)
 // ---------------------------------------------------------------------------
 
 interface PlantedBug {
@@ -28,40 +28,34 @@ interface BugMatchAnswerKey {
   passThreshold: number;
 }
 
-interface SubmittedBug {
-  title: string;
-  location: string;
-  description?: string;
-  actual?: string;
-  expected?: string;
-}
-
 function keywordMatchFraction(text: string, keywords: string[]): number {
   const lower = text.toLowerCase();
   const matched = keywords.filter((kw) => lower.includes(kw.toLowerCase()));
   return keywords.length === 0 ? 1 : matched.length / keywords.length;
 }
 
-function matchesBug(submitted: SubmittedBug, planted: PlantedBug): boolean {
-  if (!submitted.location.toLowerCase().includes(planted.location.toLowerCase())) return false;
-  const text = [submitted.title, submitted.actual ?? '', submitted.description ?? ''].join(' ');
-  return keywordMatchFraction(text, planted.signatureKeywords) >= (planted.keywordThreshold ?? 0.6);
+function matchesBugMarkdown(text: string, planted: PlantedBug): boolean {
+  const lower = text.toLowerCase();
+  // Use the first segment of the location path as a keyword (e.g. "login" from "login/form")
+  const locationWord = planted.location.split('/')[0].toLowerCase();
+  if (!lower.includes(locationWord)) return false;
+  return keywordMatchFraction(lower, planted.signatureKeywords) >= (planted.keywordThreshold ?? 0.6);
 }
 
-function gradeBugMatch(submittedYaml: unknown, answerKey: BugMatchAnswerKey) {
-  const data = submittedYaml as { bugs?: unknown[] };
-  if (!data?.bugs || !Array.isArray(data.bugs)) {
+function gradeBugMatch(submittedTexts: string[], answerKey: BugMatchAnswerKey) {
+  if (submittedTexts.length === 0) {
     return {
-      matched: 0, expected: answerKey.bugs.length, required: answerKey.passThreshold,
+      matched: 0,
+      expected: answerKey.bugs.length,
+      required: answerKey.passThreshold,
       passed: false,
-      details: [{ expected: 'valid bugs array', matched: false, reason: 'No bugs array found in submission' }],
+      details: [{ expected: 'bug-NNN.md files', matched: false, reason: 'No bug-*.md files found in starter/' }],
     };
   }
 
-  const submitted = data.bugs as SubmittedBug[];
   let matched = 0;
   const details = answerKey.bugs.map((planted) => {
-    const found = submitted.some((s) => matchesBug(s, planted));
+    const found = submittedTexts.some((text) => matchesBugMarkdown(text, planted));
     if (found) matched++;
     return {
       expected: `[${planted.id}] ${planted.description}`,
@@ -73,10 +67,113 @@ function gradeBugMatch(submittedYaml: unknown, answerKey: BugMatchAnswerKey) {
   });
 
   return {
-    matched, expected: answerKey.bugs.length, required: answerKey.passThreshold,
+    matched,
+    expected: answerKey.bugs.length,
+    required: answerKey.passThreshold,
     passed: matched >= answerKey.passThreshold,
     details,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Markdown-doc grader  (validates bug-*.md structure)
+// ---------------------------------------------------------------------------
+
+interface MarkdownDocConfig {
+  type: 'markdown-doc';
+  minFiles: number;
+  requiredSections: string[];
+  requiredFrontmatter?: string[];
+  requireEvidence?: boolean;
+  passThreshold: number; // fraction 0–1 of files that must pass
+}
+
+function parseMarkdownFrontmatter(content: string): Record<string, string> {
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!match) return {};
+  const fm: Record<string, string> = {};
+  for (const line of match[1].split('\n')) {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx === -1) continue;
+    const key = line.slice(0, colonIdx).trim();
+    const val = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+    if (key) fm[key] = val;
+  }
+  return fm;
+}
+
+function gradeMarkdownDoc(starterDir: string, answerDir: string) {
+  const configPath = path.join(answerDir, 'grader-config.yaml');
+  if (!fs.existsSync(configPath)) {
+    throw new Error('grader-config.yaml not found in answer-key. Contact your instructor.');
+  }
+  const config = yaml.load(fs.readFileSync(configPath, 'utf8')) as MarkdownDocConfig;
+
+  const bugFiles = fs
+    .readdirSync(starterDir)
+    .filter((f) => /^bug-\d+\.md$/i.test(f))
+    .sort();
+
+  if (bugFiles.length < config.minFiles) {
+    return {
+      type: 'markdown-doc',
+      passed: false,
+      score: 0,
+      details: [
+        {
+          file: '(none)',
+          passed: false,
+          reason: `Need at least ${config.minFiles} bug-*.md file(s); found ${bugFiles.length}`,
+        },
+      ],
+    };
+  }
+
+  const fileResults = bugFiles.map((filename) => {
+    const content = fs.readFileSync(path.join(starterDir, filename), 'utf8');
+    const fm = parseMarkdownFrontmatter(content);
+    const issues: string[] = [];
+
+    // Frontmatter fields
+    for (const field of config.requiredFrontmatter ?? []) {
+      const val = fm[field]?.trim() ?? '';
+      if (!val || val === '""' || val === "''") {
+        issues.push(`Frontmatter "${field}" is missing or empty`);
+      }
+    }
+
+    // Required sections (heading + at least 10 chars of content)
+    for (const heading of config.requiredSections ?? []) {
+      const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+      const sectionRegex = new RegExp(`${escaped}\\s*\\n+([\\s\\S]*?)(?=\\n##|$)`, 'i');
+      const match = content.match(sectionRegex);
+      const body = match?.[1]?.trim() ?? '';
+      if (!match || body.length < 10) {
+        issues.push(`Section "${heading}" is missing or has no content`);
+      }
+    }
+
+    // Evidence validation
+    if (config.requireEvidence) {
+      const evMatch = content.match(/##\s+Evidence([\s\S]*?)(?=\n##|$)/i);
+      if (!evMatch) {
+        issues.push('## Evidence section is missing');
+      } else {
+        const ev = evMatch[1];
+        if (!/screenshot[^\n]*:[^\n]{3,}/i.test(ev)) issues.push('Evidence: screenshot reference missing');
+        if (!/console[^\n]*:[^\n]{10,}/i.test(ev)) issues.push('Evidence: console log snippet missing or too short');
+        if (!/network[^\n]*:[^\n]{10,}/i.test(ev)) issues.push('Evidence: network request missing or too short');
+      }
+    }
+
+    return { file: filename, passed: issues.length === 0, reason: issues.length === 0 ? 'OK' : issues.join('; ') };
+  });
+
+  const passedCount = fileResults.filter((r) => r.passed).length;
+  const score = bugFiles.length > 0 ? passedCount / bugFiles.length : 0;
+  const passed = score >= (config.passThreshold ?? 1.0) && bugFiles.length >= config.minFiles;
+
+  return { type: 'markdown-doc', passed, score, details: fileResults };
 }
 
 // ---------------------------------------------------------------------------
@@ -84,7 +181,6 @@ function gradeBugMatch(submittedYaml: unknown, answerKey: BugMatchAnswerKey) {
 // ---------------------------------------------------------------------------
 
 function gradeTestRunner(starterDir: string) {
-  // Install dependencies
   const install = spawnSync('npm', ['install', '--prefer-offline', '--no-audit', '--no-fund'], {
     cwd: starterDir,
     stdio: 'pipe',
@@ -96,7 +192,6 @@ function gradeTestRunner(starterDir: string) {
     throw new Error(`npm install failed:\n${stderr}`);
   }
 
-  // Run jest with JSON output
   const test = spawnSync(
     path.join(starterDir, 'node_modules', '.bin', 'jest'),
     ['--json', '--forceExit', '--no-coverage'],
@@ -145,7 +240,7 @@ function gradeTestRunner(starterDir: string) {
 }
 
 // ---------------------------------------------------------------------------
-// Structured-doc grader
+// Structured-doc grader  (YAML validation — kept for Part 2+ exercises)
 // ---------------------------------------------------------------------------
 
 interface GraderConfig {
@@ -216,7 +311,7 @@ function gradeStructuredDoc(starterDir: string, answerDir: string) {
 // Grader type detection
 // ---------------------------------------------------------------------------
 
-type GraderType = 'bug-match' | 'test-runner' | 'structured-doc' | 'unsupported';
+type GraderType = 'bug-match' | 'test-runner' | 'structured-doc' | 'markdown-doc' | 'unsupported';
 
 function detectGraderType(trackSlug: string, partSlug: string, exerciseSlug: string): GraderType {
   const specPath = path.join(TRACKS_DIR, trackSlug, partSlug, 'exercises', exerciseSlug, 'spec.md');
@@ -225,6 +320,7 @@ function detectGraderType(trackSlug: string, partSlug: string, exerciseSlug: str
   const match = spec.match(/[-*]\s+Grader:\s+`?([a-z-]+)`?/i);
   const grader = match?.[1]?.toLowerCase() ?? '';
   if (grader.includes('bug-match')) return 'bug-match';
+  if (grader.includes('markdown-doc')) return 'markdown-doc';
   if (grader.includes('test-runner')) return 'test-runner';
   if (grader.includes('structured-doc')) return 'structured-doc';
   return 'unsupported';
@@ -269,11 +365,10 @@ export async function runGrader(submissionId: string): Promise<void> {
 
   await prisma.submission.update({ where: { id: submissionId }, data: { status: 'GRADING' } });
 
-  // exerciseId format: trackSlug/partSlug/exerciseSlug
   const parts = submission.exerciseId.split('/');
   const [trackSlug, partSlug, exerciseSlug] = parts.length >= 3
     ? parts
-    : ['qa-fundamentals', parts[0], parts[1]]; // backward-compat
+    : ['qa-fundamentals', parts[0], parts[1]];
 
   const tempDir = path.join(os.tmpdir(), `learnstack-grade-${submissionId}`);
 
@@ -298,16 +393,27 @@ export async function runGrader(submissionId: string): Promise<void> {
       const answerKeyPath = path.join(
         TRACKS_DIR, trackSlug, partSlug, 'exercises', exerciseSlug, 'answer-key', 'bugs-expected.yaml',
       );
-      const submissionPath = path.join(starterDir, 'bugs.yaml');
-
-      if (!fs.existsSync(submissionPath)) throw new Error('bugs.yaml not found in starter/ of your fork.');
       if (!fs.existsSync(answerKeyPath)) throw new Error('Answer key not found. Contact your instructor.');
 
-      const submittedYaml = yaml.load(fs.readFileSync(submissionPath, 'utf8'));
+      const bugFiles = fs.readdirSync(starterDir).filter((f) => /^bug-\d+\.md$/i.test(f)).sort();
+      if (bugFiles.length === 0) {
+        throw new Error(
+          'No bug-*.md files found in starter/ of your fork.\n' +
+          'Create one Markdown file per bug (e.g. bug-001.md, bug-002.md).',
+        );
+      }
+      const submittedTexts = bugFiles.map((f) => fs.readFileSync(path.join(starterDir, f), 'utf8'));
       const answerKey = yaml.load(fs.readFileSync(answerKeyPath, 'utf8')) as BugMatchAnswerKey;
-      const result = gradeBugMatch(submittedYaml, answerKey);
+      const result = gradeBugMatch(submittedTexts, answerKey);
       graderOutput = { type: 'bug-match', result };
       score = result.matched / result.expected;
+      passed = result.passed;
+
+    } else if (graderType === 'markdown-doc') {
+      const answerDir = path.join(TRACKS_DIR, trackSlug, partSlug, 'exercises', exerciseSlug, 'answer-key');
+      const result = gradeMarkdownDoc(starterDir, answerDir);
+      graderOutput = result;
+      score = result.score;
       passed = result.passed;
 
     } else if (graderType === 'test-runner') {

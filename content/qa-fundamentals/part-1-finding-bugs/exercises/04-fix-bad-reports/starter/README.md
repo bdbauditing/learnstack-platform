@@ -1,28 +1,27 @@
 # Starter — Exercise 04: Fix Bad Reports
 
-Read `bad-reports.yaml`. Each report is broken. Rewrite each one properly in `fixed-reports.yaml`.
+Read the bad reports in `bad-reports/`. Each one is broken. Rewrite each as a proper bug report.
 
-Use the same `bugs.yaml` format as previous exercises. Every field must be filled in.
+Create your rewrites as `bug-001.md` through `bug-005.md` in this directory. A blank template is in `bug-001.md`.
 
 ## What you need to fix
 
-| Report | Problem(s) |
-|--------|-----------|
-| BAD-001 | No environment, vague steps, expected/actual are swapped |
-| BAD-002 | Vague steps ("add stuff"), no selector, priority missing |
-| BAD-003 | No expected result, actual is wrong (says "everything works"), no environment |
-| BAD-004 | Completely vague — no location, no steps, no severity, no priority |
-| BAD-005 | No device info in environment, no selector, one-word steps |
+| Bad report | Problem(s) |
+|-----------|-----------|
+| `bad-001.md` | Vague title "Login broken", steps say "do login", expected/actual swapped |
+| `bad-002.md` | Vague steps, no specific field or button mentioned, missing environment |
+| `bad-003.md` | No expected behavior, actual says "everything works fine" (it doesn't), no environment |
+| `bad-004.md` | Completely vague — no location, no steps, no severity, no priority |
+| `bad-005.md` | No device info, no specific button or URL, one-word steps |
 
-## Requirements for each fixed report
+## Requirements per fixed report
 
-- `title`: Descriptive — "[Area] What's wrong when doing what"
-- `location`: Specific component path (e.g. "login/form", "cart/total")
-- `severity`: One of Critical / High / Medium / Low
-- `priority`: One of High / Medium / Low
-- `environment`: All four sub-fields filled in (browser, os, viewport, url)
-- `steps`: At least 3 steps, each with a real `action` and either `selector` or `url`
-- `expected`: At least 10 characters, describes correct behavior
-- `actual`: At least 10 characters, describes the actual broken behavior
+Each `bug-NNN.md` must have:
+- **title** (frontmatter): specific — "[Area] What's wrong when doing what"
+- **severity** + **priority** (frontmatter): filled in
+- **## Environment**: browser, OS, viewport, URL — all filled
+- **## Steps to Reproduce**: at least 3 numbered steps with specific actions
+- **## Expected Behavior**: at least 10 characters describing correct behavior
+- **## Actual Behavior**: at least 10 characters describing the actual broken behavior (not what should happen)
 
-The grader checks structure only — you don't need to match the exact original bug. Any plausible rewrite that is structurally valid passes.
+The grader checks structure only — you don't need to match the exact original bug. Any plausible, specific rewrite passes.

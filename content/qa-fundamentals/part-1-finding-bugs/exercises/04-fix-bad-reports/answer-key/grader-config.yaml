@@ -1,0 +1,13 @@
+type: markdown-doc
+minFiles: 5
+requiredFrontmatter:
+  - title
+  - severity
+  - priority
+requiredSections:
+  - "## Steps to Reproduce"
+  - "## Expected Behavior"
+  - "## Actual Behavior"
+  - "## Environment"
+requireEvidence: false
+passThreshold: 1.0

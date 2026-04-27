@@ -2,7 +2,7 @@
 
 bugs:
   - id: BUG-001
-    description: "Submit disabled with valid credentials"
+    description: "Submit button disabled with valid credentials"
     location: "login"
     severity: High
     priority: High
@@ -18,15 +18,15 @@ bugs:
     keywordThreshold: 0.5
 
   - id: BUG-003
-    description: "Invalid email accepted on registration"
+    description: "Invalid email format accepted"
     location: "registration"
     severity: High
     priority: High
-    signatureKeywords: ["email", "invalid", "registration"]
+    signatureKeywords: ["email", "invalid", "format"]
     keywordThreshold: 0.5
 
   - id: BUG-004
-    description: "500 error on duplicate email"
+    description: "Duplicate email returns 500 error"
     location: "registration"
     severity: High
     priority: Medium
@@ -34,51 +34,51 @@ bugs:
     keywordThreshold: 0.5
 
   - id: BUG-005
-    description: "Cart total doesn't update"
-    location: "cart"
+    description: "Task created with blank title"
+    location: "tasks"
     severity: High
     priority: High
-    signatureKeywords: ["total", "cart", "quantity"]
-    keywordThreshold: 0.5
+    signatureKeywords: ["task", "blank", "title", "empty"]
+    keywordThreshold: 0.4
 
   - id: BUG-006
-    description: "Coupon applies 100% discount"
-    location: "cart"
-    severity: Critical
-    priority: High
-    signatureKeywords: ["coupon", "discount", "cart"]
-    keywordThreshold: 0.5
-
-  - id: BUG-007
-    description: "Credit card field accepts letters"
-    location: "checkout"
-    severity: High
-    priority: High
-    signatureKeywords: ["credit", "card", "letters"]
-    keywordThreshold: 0.5
-
-  - id: BUG-008
-    description: "Order confirmation email not sent"
-    location: "checkout"
+    description: "Completed task still shows in Active Tasks"
+    location: "tasks"
     severity: Medium
     priority: High
-    signatureKeywords: ["email", "order", "confirmation"]
-    keywordThreshold: 0.5
+    signatureKeywords: ["task", "completed", "active", "filter"]
+    keywordThreshold: 0.4
+
+  - id: BUG-007
+    description: "Seat count can be decremented to 0"
+    location: "billing"
+    severity: High
+    priority: High
+    signatureKeywords: ["seat", "zero", "minimum", "decrement"]
+    keywordThreshold: 0.4
+
+  - id: BUG-008
+    description: "Promo code SAVE10 applies 100% discount"
+    location: "billing"
+    severity: Critical
+    priority: High
+    signatureKeywords: ["promo", "discount", "percent", "code"]
+    keywordThreshold: 0.4
 
   - id: BUG-009
-    description: "Bio doesn't save on Update"
+    description: "Bio changes not saved after Update"
     location: "profile"
     severity: Medium
     priority: Medium
-    signatureKeywords: ["bio", "save", "profile"]
-    keywordThreshold: 0.6
+    signatureKeywords: ["bio", "save", "profile", "update"]
+    keywordThreshold: 0.4
 
   - id: BUG-010
-    description: "Avatar upload accepts .exe files"
+    description: "Avatar upload accepts any file type"
     location: "profile"
     severity: High
     priority: High
-    signatureKeywords: ["avatar", "upload", "file"]
-    keywordThreshold: 0.5
+    signatureKeywords: ["avatar", "upload", "file", "exe"]
+    keywordThreshold: 0.4
 
 passThreshold: 8

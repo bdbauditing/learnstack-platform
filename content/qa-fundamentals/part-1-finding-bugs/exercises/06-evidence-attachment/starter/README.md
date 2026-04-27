@@ -1,24 +1,24 @@
 # Starter — Exercise 06: Evidence Attachment
 
-Three bugs are partially written. Add evidence to each.
+Three bug reports are here with steps already written but no evidence. Add the `## Evidence` section to each file.
 
-For each bug, fill in the `evidence:` section with:
-- `screenshot:` — a filename (e.g., "login-button-disabled.png")
-- `console:` — a relevant error snippet (e.g., "TypeError: Cannot read properties of null")
-- `network:` — a request/response (e.g., "POST /api/login → 500 Internal Server Error")
+Open `bug-001.md`, `bug-002.md`, `bug-003.md` and fill in the evidence for all three.
 
 ## Evidence format
 
-```yaml
-evidence:
-  screenshot: "cart-total-not-updating-firefox130.png"
-  console: "ReferenceError: cartTotal is not defined at cart.js:112:5"
-  network: "PATCH /api/cart/items/42 → 200 OK | Response: {\"quantity\": 3, \"total\": 59.97}"
+```markdown
+## Evidence
+
+**Screenshot:** login-submit-disabled-chrome130.png
+
+**Console:** TypeError: Cannot read properties of null (reading 'addEventListener') at login.js:47
+
+**Network:** POST /api/auth/login → 422 Unprocessable Entity | Body: {"error": "validation_failed"}
 ```
 
 ## Tips
 
-- Screenshot filenames should describe the bug (not just "screenshot.png").
-- Console messages — look for `TypeError`, `ReferenceError`, `Uncaught`, `404`, etc.
-- For the network entry, include the HTTP method (GET/POST/PATCH), the path, and the status code.
-- You're writing plausible evidence, not real evidence from a real app. Make it realistic.
+- Screenshot filename should describe the bug (not just "screenshot.png") and include the browser/version.
+- Console — copy the relevant error line from DevTools → Console. Look for `TypeError`, `ReferenceError`, `Uncaught`, or any network error.
+- Network — include the HTTP method (GET/POST/PATCH), the endpoint path, and the status code. Find it in DevTools → Network tab.
+- You're writing plausible evidence — make it realistic even if you didn't capture it live.

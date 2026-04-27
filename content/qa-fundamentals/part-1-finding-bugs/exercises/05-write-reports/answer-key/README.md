@@ -1,16 +1,12 @@
 # Grader Notes — Exercise 05
 
-Validation is structural + keyword based. No exact match checking.
+**Grader:** markdown-doc (see `grader-config.yaml`)
 
-Each report must have:
-- Non-empty title, location, severity, priority
-- All environment fields filled
-- At least 2 steps with proper action types
-- Expected and actual at least 15 chars, must not be identical
-- Severity is one of: Critical/High/Medium/Low
-- Priority is one of: High/Medium/Low
+Each `bug-001.md` through `bug-005.md` must have:
+- Non-empty `title`, `severity`, `priority` in frontmatter
+- `## Environment`, `## Steps to Reproduce`, `## Expected Behavior`, `## Actual Behavior` sections with ≥10 chars each
 
-All 5 must pass for the exercise to pass.
+All 5 must pass for the exercise to pass. No exact content matching.
 
 ## Per-bug notes
 

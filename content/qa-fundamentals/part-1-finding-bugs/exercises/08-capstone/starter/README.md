@@ -1,14 +1,10 @@
 # Starter — Exercise 08: Capstone
 
-Explore the entire app at **https://learnstack-taskforge-web.onrender.com**. Find 10 bugs across all pages.
+Explore **https://learnstack-taskforge-web.onrender.com**. Find 10 bugs across all pages. Write a complete bug report for each.
 
-Write complete bug reports with:
-- All required fields
-- Specific, actionable steps
-- Evidence (screenshot, console, network)
-- Correct severity and priority
+**Login:** `bob@taskforge.io` / `Password1!` — press **Enter** to submit (the disabled button is Bug #1).
 
-**You need 8/10 reports to pass full validation.**
+**You need 8/10 reports to pass.**
 
 ## Pages to test
 
@@ -16,50 +12,28 @@ Write complete bug reports with:
 |------|-----|-----------------|
 | Login | /login | Credentials, error messages, field types, links |
 | Registration | /register | Validation, duplicate email, password rules |
-| Dashboard | / | Task counts, layout, navigation links |
-| Tasks | /tasks | Create task (BUG-016!), edit, delete, status |
-| Billing | /billing | Seat count, pricing, promo code, button states |
+| Tasks | /tasks | Create task with blank title, completed tasks filter |
+| Billing | /billing | Seat count controls, promo code, price display |
 | Profile | /profile | Bio save, avatar upload, field validation |
 
-**Login credentials:** `bob@taskforge.io` / `Password1!` — press **Enter** to submit.
+## Create one file per bug
 
-## Checklist before submitting
+Name your files `bug-001.md`, `bug-002.md`, etc. A template is in `bug-001.md`.
 
-- [ ] 10 bug reports in bugs.yaml
-- [ ] Every report has title, location, severity, priority
-- [ ] Every report has all 4 environment fields filled
-- [ ] Every report has at least 3 steps
-- [ ] Every report has expected and actual (each at least 15 chars)
-- [ ] Every report has all 3 evidence fields (screenshot, console, network)
+Each report must include:
+- `title`, `severity`, `priority` in the frontmatter
+- `## Environment` — browser, OS, viewport, URL
+- `## Steps to Reproduce` — numbered, specific steps
+- `## Expected Behavior` — what should happen
+- `## Actual Behavior` — what actually happens
+- `## Evidence` — screenshot filename, console error, network request
 
-## Format reminder
+## Pre-submit checklist
 
-```yaml
-bugs:
-  - title: "[Login] Submit button disabled with valid credentials"
-    location: "login/form"
-    severity: High
-    priority: High
-    environment:
-      browser: Chrome 130
-      os: macOS 14
-      viewport: 1440x900
-      url: "https://learnstack-taskforge-web.onrender.com/login"
-    steps:
-      - action: navigate
-        url: "/login"
-      - action: type
-        selector: '[data-test="email"]'
-        value: "user@example.com"
-      - action: type
-        selector: '[data-test="password"]'
-        value: "ValidPass123!"
-      - action: click
-        selector: '[data-test="submit"]'
-    expected: "User is redirected to /dashboard after successful login"
-    actual: "Submit button remains disabled — cannot be clicked despite valid credentials"
-    evidence:
-      screenshot: "login-submit-disabled-chrome130-macos14.png"
-      console: "TypeError: Cannot read properties of null (reading 'disabled') at login-form.js:83"
-      network: "POST /api/auth/login → never fired (button never became enabled)"
-```
+- [ ] 10 `bug-*.md` files in this folder
+- [ ] Every report has a specific title with `[Area]` prefix
+- [ ] Every report has severity and priority filled in
+- [ ] Every environment table is complete (browser, OS, viewport, URL)
+- [ ] Every Steps to Reproduce has at least 3 numbered steps
+- [ ] Every Expected/Actual Behavior has meaningful content
+- [ ] Every `## Evidence` section has screenshot, console, and network entries

@@ -1,43 +1,63 @@
 # Starter — Exercise 01: Bug Hunt Login
 
-Clone this folder. Open the app at **https://learnstack-taskforge-web.onrender.com** and find bugs on the login page.
+Open the app at **https://learnstack-taskforge-web.onrender.com** and find bugs on the login page.
 
 **Test credentials:** `bob@taskforge.io` / `Password1!`
-> The submit button is one of the bugs — it looks disabled. Press **Enter** to submit the form and access the rest of the app.
+> The submit button is one of the bugs — it looks disabled. Press **Enter** to log in.
 
-Fill in `bugs.yaml` with each bug you find. You need to find **at least 3 bugs** to pass.
+Find bugs, then **create one Markdown file per bug** — name them `bug-001.md`, `bug-002.md`, etc. A blank template is already here in `bug-001.md`.
 
-## Format
+You need at least **3 bugs** to pass.
 
-```yaml
-bugs:
-  - title: "[Area] What's wrong when doing what"
-    location: "login/component-name"
-    severity: Critical | High | Medium | Low
-    priority: High | Medium | Low
-    environment:
-      browser: Chrome 130
-      os: macOS 14
-      viewport: 1440x900
-      url: "https://learnstack-taskforge-web.onrender.com/login"
-    steps:
-      - action: navigate
-        url: "/login"
-      - action: type
-        selector: '[data-test="email"]'
-        value: "user@example.com"
-      - action: type
-        selector: '[data-test="password"]'
-        value: "correct-password"
-      - action: click
-        selector: '[data-test="submit"]'
-    expected: "User is redirected to dashboard"
-    actual: "Submit button is disabled — nothing happens"
+## Format (GitHub Issue / Jira style)
+
+```markdown
+---
+title: "[Login] Submit button disabled with valid credentials"
+severity: High
+priority: High
+---
+
+## Environment
+
+| Field    | Value |
+|----------|-------|
+| Browser  | Chrome 130 |
+| OS       | macOS 14 |
+| Viewport | 1440x900 |
+| URL      | https://learnstack-taskforge-web.onrender.com/login |
+
+## Steps to Reproduce
+
+1. Navigate to /login
+2. Enter bob@taskforge.io in the Email field
+3. Enter Password1! in the Password field
+4. Click the Submit button
+
+## Expected Behavior
+
+Submit button becomes enabled and clicking it logs the user in.
+
+## Actual Behavior
+
+Submit button remains visually disabled even with valid credentials.
 ```
+
+### Field guide
+
+| Field | Real-world equivalent | Values |
+|-------|-----------------------|--------|
+| `title` | Jira Summary / GitHub Issue title | Start with `[Area]` e.g. `[Login]`, `[Registration]` |
+| `severity` | Jira Severity | Critical / High / Medium / Low |
+| `priority` | Jira Priority | High / Medium / Low |
+| `## Environment` | Jira Environment field | Browser, OS, viewport, URL |
+| `## Steps to Reproduce` | Jira Steps to Reproduce | Numbered, specific steps |
+| `## Expected Behavior` | Jira Expected Result | What should happen |
+| `## Actual Behavior` | Jira Actual Result | What does happen |
 
 ## Tips
 
-- Test the obvious paths first (happy path, wrong password, empty fields).
-- Look at the browser console for JavaScript errors.
-- Check network requests in DevTools.
-- The `location` field should describe where in the UI the bug lives (e.g. `login/form`, `login/error-message`).
+- Test the obvious paths first: happy path, wrong password, empty fields.
+- Check the browser console (DevTools → Console) for JavaScript errors.
+- Check network requests (DevTools → Network) for failed API calls.
+- Use specific step language: "Click the **Submit** button" not "click submit".

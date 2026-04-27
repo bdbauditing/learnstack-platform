@@ -2,39 +2,47 @@
 
 Open **https://learnstack-taskforge-web.onrender.com/register** and find 5 bugs. You need **4/5 to pass**.
 
-> No login needed — go directly to `/register`. If you need to test logged-in flows: `bob@taskforge.io` / `Password1!`, press **Enter** to submit.
+> No login needed — go directly to `/register`.
 
-Same format as Exercise 01. See the bugs.yaml template below.
+Create one Markdown file per bug: `bug-001.md`, `bug-002.md`, etc. A blank template is already in `bug-001.md`.
 
-## Format
+## Format (GitHub Issue / Jira style)
 
-```yaml
-bugs:
-  - title: "[Area] What's wrong when doing what"
-    location: "registration/component-name"
-    severity: Critical | High | Medium | Low
-    priority: High | Medium | Low
-    environment:
-      browser: Chrome 130
-      os: macOS 14
-      viewport: 1440x900
-      url: "https://learnstack-taskforge-web.onrender.com/register"
-    steps:
-      - action: navigate
-        url: "/register"
-      - action: type
-        selector: '[data-test="email"]'
-        value: "notanemail"
-      - action: click
-        selector: '[data-test="submit"]'
-    expected: "Validation error: please enter a valid email address"
-    actual: "Form submits without any email format error"
+```markdown
+---
+title: "[Registration] Email field accepts text without an @ symbol"
+severity: High
+priority: High
+---
+
+## Environment
+
+| Field    | Value |
+|----------|-------|
+| Browser  | Chrome 130 |
+| OS       | macOS 14 |
+| Viewport | 1440x900 |
+| URL      | https://learnstack-taskforge-web.onrender.com/register |
+
+## Steps to Reproduce
+
+1. Navigate to /register
+2. Enter "notanemail" in the Email field (no @ symbol)
+3. Fill in all other required fields with valid data
+4. Click Create Account
+
+## Expected Behavior
+
+Inline validation error: "Please enter a valid email address."
+
+## Actual Behavior
+
+The form submits without any email format validation error.
 ```
 
 ## Tips
 
-- Test every input field with invalid data.
-- Try submitting the form with various fields empty.
-- Check that validation messages appear at the right time (on blur vs on submit).
-- Try registering with an email you already used.
-- Pay attention to the Terms and Conditions checkbox.
+- Test every field with invalid data — empty, too short, wrong format.
+- Try submitting with an email that already has an account (e.g. `bob@taskforge.io`).
+- Watch what the password strength indicator says for weak passwords.
+- Check the Terms and Conditions checkbox — is it enforced?
