@@ -16,9 +16,12 @@ Write complete bug reports with:
 |------|-----|-----------------|
 | Login | /login | Credentials, error messages, field types, links |
 | Registration | /register | Validation, duplicate email, password rules |
-| Cart | /cart | Quantities, pricing, coupons, remove items |
-| Checkout | /checkout | Payment fields, order placement, confirmation |
+| Dashboard | / | Task counts, layout, navigation links |
+| Tasks | /tasks | Create task (BUG-016!), edit, delete, status |
+| Billing | /billing | Seat count, pricing, promo code, button states |
 | Profile | /profile | Bio save, avatar upload, field validation |
+
+**Login credentials:** `bob@taskforge.io` / `Password1!` — press **Enter** to submit.
 
 ## Checklist before submitting
 

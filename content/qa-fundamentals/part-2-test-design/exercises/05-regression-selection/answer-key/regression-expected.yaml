@@ -7,18 +7,15 @@ expected_ids:
   - TC-008
   - TC-009
   - TC-010
-  - TC-011
-  - TC-013
-  - TC-014
-  - TC-001
-  - TC-002
+  - TC-015
+  - TC-016
+  - TC-017
+  - TC-018
+  - TC-019
 
 pass_threshold: 8
 
 # Rationale:
-# TC-006..TC-011: directly impacted by checkout + coupon changes
-# TC-013, TC-014: new features (avatar upload, email re-verification)
-# TC-001, TC-002: login baseline / smoke sanity
-#
-# Acceptable alternates: TC-005 or TC-016/TC-018/TC-019 may replace
-# TC-001 or TC-002 without penalty (both are in the expected set anyway).
+# TC-006..TC-010: directly cover task creation (title validation + file attachment — both changed)
+# TC-015..TC-019: directly cover billing page (seat count + promo code — both changed)
+# Acceptable alternates: TC-001/TC-002 (smoke baseline), TC-011 (edit task shares title validation code)

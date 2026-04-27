@@ -6,15 +6,15 @@ expected_ids:
   - TC-003
   - TC-005
   - TC-006
-  - TC-010
+  - TC-009
 
 pass_threshold: 4
 
 # Rationale:
-# TC-001: can users log in? (critical gate)
-# TC-003: homepage loads without JS errors (basic health)
-# TC-005: add to cart (core e-commerce path)
-# TC-006: checkout end-to-end (can users buy?)
-# TC-010: API health check (is the backend up?)
+# TC-001: can users log in? (critical gate — everything requires auth)
+# TC-003: API health check (is the backend even up?)
+# TC-005: create task returns 201 (core task management path, and BUG-016 would catch here)
+# TC-006: task list loads (can users see their work?)
+# TC-009: 404 page (basic routing health)
 #
-# Acceptable alternates: TC-004 for TC-003; TC-007 or TC-016 for TC-005.
+# Acceptable alternates: TC-007 (billing renders) or TC-008 (profile loads) instead of TC-009.

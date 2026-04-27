@@ -8,16 +8,22 @@
 
 ## Your mission
 
-A sprint just shipped changes to the **checkout flow** and **user profile page**. You have 30 test cases in the full suite. Select the **10 most important ones for regression** given what changed.
+A sprint just shipped changes to two areas of TaskForge:
 
-## Context
+- **Task creation:** Added a file attachment field and rewrote title validation
+- **Billing page:** Seat count controls rewritten; promo code logic changed
 
-Changes in this sprint:
-- Checkout: new coupon code field added
-- Checkout: card validation logic rewritten
-- Profile: avatar upload added
-- Profile: email change now requires re-verification
+You have 30 test cases in the full suite (`starter/all-tests.yaml`). Select the **10 most important ones for regression** given what changed.
+
+## How to think about it
+
+Good regression selection targets:
+1. Tests that directly exercise what changed
+2. Tests for features that share code with what changed (same component, same API)
+3. Tests for high-risk user paths that a regression would break visibly
+
+Deprioritise tests for unrelated stable features.
 
 ## Deliverable
 
-`starter/regression-selection.yaml` — list the IDs of your 10 selected tests in priority order.
+`starter/regression-selection.yaml` — list the IDs of your 10 selected tests in priority order (highest risk first).

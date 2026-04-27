@@ -5,89 +5,89 @@ tests:
     title: "Login with valid credentials"
     area: authentication
   - id: TC-002
-    title: "Login with invalid password"
+    title: "Login with invalid password shows error"
     area: authentication
   - id: TC-003
-    title: "Registration happy path"
+    title: "Login submit button state with empty fields"
     area: authentication
   - id: TC-004
-    title: "Registration with duplicate email"
+    title: "Registration happy path"
     area: authentication
   - id: TC-005
-    title: "Add item to cart"
-    area: checkout
+    title: "Registration rejects duplicate email"
+    area: authentication
   - id: TC-006
-    title: "Apply valid coupon code"
-    area: checkout
+    title: "Create task — title validation (empty, too long)"
+    area: tasks
   - id: TC-007
-    title: "Apply invalid coupon code"
-    area: checkout
+    title: "Create task — file attachment upload"
+    area: tasks
   - id: TC-008
-    title: "Card number validation"
-    area: checkout
+    title: "Create task — attach file over size limit"
+    area: tasks
   - id: TC-009
-    title: "Expired card rejection"
-    area: checkout
+    title: "Create task — attach unsupported file type"
+    area: tasks
   - id: TC-010
-    title: "Empty cart guard"
-    area: checkout
+    title: "Create task returns HTTP 201"
+    area: tasks
   - id: TC-011
-    title: "Order confirmation received"
-    area: checkout
+    title: "Edit task title"
+    area: tasks
   - id: TC-012
-    title: "Update display name"
-    area: profile
+    title: "Delete task with confirmation dialog"
+    area: tasks
   - id: TC-013
-    title: "Upload avatar (new feature)"
-    area: profile
+    title: "Task list — filter by status"
+    area: tasks
   - id: TC-014
-    title: "Change email with re-verification (new behavior)"
-    area: profile
+    title: "Task list — search by keyword"
+    area: tasks
   - id: TC-015
-    title: "Change password"
-    area: profile
+    title: "Billing — seat count increases correctly"
+    area: billing
   - id: TC-016
-    title: "Find products by keyword"
-    area: search
+    title: "Billing — seat count cannot go below 1"
+    area: billing
   - id: TC-017
-    title: "Empty search results state"
-    area: search
+    title: "Billing — total price updates on seat count change"
+    area: billing
   - id: TC-018
-    title: "Increase item quantity in cart"
-    area: cart
+    title: "Billing — promo code SAVE10 applies discount"
+    area: billing
   - id: TC-019
-    title: "Remove item from cart"
-    area: cart
+    title: "Billing — invalid promo code shows error"
+    area: billing
   - id: TC-020
-    title: "Cart price recalculation"
-    area: cart
+    title: "Billing — Proceed button disabled when no plan selected"
+    area: billing
   - id: TC-021
-    title: "Admin: create user"
-    area: admin
+    title: "Profile — update display name"
+    area: profile
   - id: TC-022
-    title: "Admin: deactivate user"
-    area: admin
+    title: "Profile — change password"
+    area: profile
   - id: TC-023
-    title: "Admin: export report"
-    area: admin
+    title: "Profile — upload avatar"
+    area: profile
   - id: TC-024
-    title: "Notifications: email on order"
-    area: notifications
+    title: "Admin — create new user"
+    area: admin
   - id: TC-025
-    title: "Notifications: email on password change"
-    area: notifications
+    title: "Admin — view user submission history"
+    area: admin
   - id: TC-026
-    title: "API: GET /products"
+    title: "API — GET /api/health returns 200"
     area: api
   - id: TC-027
-    title: "API: POST /orders"
+    title: "API — POST /api/tasks returns 201"
     area: api
   - id: TC-028
-    title: "API: auth token expiry"
+    title: "API — auth token expiry returns 401"
     area: api
   - id: TC-029
-    title: "Dashboard load time < 3s"
+    title: "Dashboard loads within 3 seconds"
     area: performance
   - id: TC-030
-    title: "Accessibility: homepage scan"
+    title: "Accessibility scan passes on login page"
     area: accessibility

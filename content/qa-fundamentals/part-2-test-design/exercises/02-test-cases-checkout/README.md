@@ -1,33 +1,34 @@
-# Exercise 02 — Test Cases for Checkout
+# Exercise 02 — Test Cases: Multi-Step Checkout Flow
 
 **Technique focus:** Decision Tables + Equivalence Partitioning
 
 **Time:** ~35 minutes
-**Grader:** test-catches-bug (Playwright)
-**Pass threshold:** catch 5 out of 6 planted bugs
+**Grader:** structured-doc
+**Pass threshold:** 8 test cases with all required fields
+
+> **Note:** This exercise uses a hypothetical e-commerce checkout scenario — not TaskForge itself. You don't need to open any app. The goal is to practice writing structured test cases for a multi-step flow with complex decision logic.
 
 ## Your mission
 
-Write test cases for a checkout flow. The checkout has multi-step logic (cart → address → payment → confirmation), which means more decision paths.
+You are testing a checkout flow with four steps: **cart → address → payment → confirmation**.
 
-## The buggy app
+Write test cases using equivalence partitioning and decision table thinking to cover all meaningful combinations. You need at least 8 well-formed test cases.
 
-**https://learnstack-taskforge-web.onrender.com** — the checkout flow has 6 planted bugs.
+## What to cover
 
-## What to test
+Apply decision table thinking to these variables:
 
-Apply decision table thinking:
-- Checkout with items in cart (happy path)
-- Checkout with empty cart
-- Invalid card number format
-- Expired card
-- Billing address validation (required fields)
-- Coupon code (valid, invalid, already-used)
-- Order total calculation
-- Confirmation email trigger
+| Variable | Partitions |
+|----------|-----------|
+| Cart state | Items in cart / Empty cart |
+| Card number | Valid / Invalid format / Expired |
+| Billing address | Complete / Missing required field |
+| Coupon code | None / Valid / Invalid / Already used |
+| Order total | Normal / Zero (empty cart) |
 
 ## Deliverable
 
-`starter/test-cases.yaml` — test cases covering the checkout flow. Aim for 10+ cases.
+`starter/test-cases.yaml` — at least 8 test cases. Each must have:
+- `id`, `title`, `preconditions`, `steps`, `expected`, `priority`
 
-**Pass: catch 5/6 bugs.**
+**Pass: 8+ cases with all required fields filled.**

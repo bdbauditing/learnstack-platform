@@ -4,78 +4,78 @@ candidates:
     duration_seconds: 8
     area: authentication
   - id: TC-002
-    title: "Login with invalid password"
+    title: "Login with invalid password shows error"
     duration_seconds: 6
     area: authentication
   - id: TC-003
-    title: "Homepage loads without JavaScript errors"
-    duration_seconds: 5
+    title: "API health check: GET /api/health returns 200"
+    duration_seconds: 2
     area: health
   - id: TC-004
-    title: "Products page renders all items"
-    duration_seconds: 7
-    area: catalog
-  - id: TC-005
-    title: "Add item to cart"
-    duration_seconds: 9
-    area: checkout
-  - id: TC-006
-    title: "Checkout happy path end-to-end"
-    duration_seconds: 25
-    area: checkout
-  - id: TC-007
-    title: "Registration happy path"
-    duration_seconds: 12
+    title: "Registration page renders without errors"
+    duration_seconds: 5
     area: authentication
+  - id: TC-005
+    title: "Create task (POST /api/tasks returns 201)"
+    duration_seconds: 9
+    area: tasks
+  - id: TC-006
+    title: "Task list loads for logged-in user"
+    duration_seconds: 7
+    area: tasks
+  - id: TC-007
+    title: "Billing page renders with plan options"
+    duration_seconds: 6
+    area: billing
   - id: TC-008
     title: "Profile page loads for logged-in user"
     duration_seconds: 6
     area: profile
   - id: TC-009
-    title: "Search returns results for common query"
-    duration_seconds: 8
-    area: search
-  - id: TC-010
-    title: "API health check: GET /api/health returns 200"
-    duration_seconds: 2
-    area: api
-  - id: TC-011
-    title: "Password reset email sent successfully"
-    duration_seconds: 15
-    area: authentication
-  - id: TC-012
-    title: "Admin login"
-    duration_seconds: 8
-    area: admin
-  - id: TC-013
-    title: "Accessibility scan passes on homepage"
-    duration_seconds: 30
-    area: accessibility
-  - id: TC-014
     title: "404 page renders for unknown URL"
     duration_seconds: 3
     area: health
+  - id: TC-010
+    title: "Registration happy path end-to-end"
+    duration_seconds: 18
+    area: authentication
+  - id: TC-011
+    title: "Admin login and dashboard access"
+    duration_seconds: 10
+    area: admin
+  - id: TC-012
+    title: "Full task CRUD flow (create, edit, delete)"
+    duration_seconds: 35
+    area: tasks
+  - id: TC-013
+    title: "Accessibility scan on login page"
+    duration_seconds: 30
+    area: accessibility
+  - id: TC-014
+    title: "JWT token refresh works after expiry"
+    duration_seconds: 25
+    area: authentication
   - id: TC-015
-    title: "Mobile viewport navigation works"
+    title: "Mobile viewport navigation renders correctly"
     duration_seconds: 12
     area: responsive
   - id: TC-016
-    title: "Cart quantity update recalculates total"
-    duration_seconds: 10
-    area: cart
+    title: "Dashboard loads within 3 seconds"
+    duration_seconds: 8
+    area: performance
   - id: TC-017
-    title: "Order history page loads"
-    duration_seconds: 7
-    area: orders
+    title: "Billing seat count controls work"
+    duration_seconds: 10
+    area: billing
   - id: TC-018
     title: "Notifications preferences page loads"
     duration_seconds: 5
     area: settings
   - id: TC-019
-    title: "Language switcher changes UI language"
-    duration_seconds: 8
-    area: i18n
-  - id: TC-020
     title: "Footer links render without 404s"
     duration_seconds: 10
     area: health
+  - id: TC-020
+    title: "Admin user management page loads"
+    duration_seconds: 7
+    area: admin

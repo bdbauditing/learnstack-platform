@@ -10,18 +10,20 @@ The TaskForge 2.0 team billing / subscription upgrade page has **6 planted bugs*
 
 ## The app
 
-**https://learnstack-taskforge-web.onrender.com** — log in, then navigate to **Settings → Billing → Upgrade Plan**.
+**https://learnstack-taskforge-web.onrender.com** — log in, then go directly to `/billing`.
 
 **Test credentials:** `bob@taskforge.io` / `Password1!`
 > The login submit button is visually broken — press **Enter** to log in.
 
+The billing page is TaskForge's subscription upgrade screen. You pick a plan, set the seat count, apply a promo code, and proceed.
+
 What to test:
-- Seat count controls (increase, decrease, reduce to 0)
-- Remove plan / clear selection
-- Price calculations (price per seat × seat count)
-- Promo code application
-- Proceed to checkout button state
-- Empty selection state (no plan chosen)
+- Seat count controls — try decreasing all the way down to 0
+- Plan selection — what happens when you remove the selected plan?
+- Price calculation — does the total update when you change seat count?
+- Promo code field — try `SAVE10`
+- Proceed button — when should it be active vs disabled?
+- Price display — look closely at how prices are formatted
 
 ## Deliverable
 

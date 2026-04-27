@@ -1,38 +1,48 @@
-# Starter — Exercise 03: Bug Hunt Shopping Cart
+# Starter — Exercise 03: Bug Hunt Billing Page
 
-Open **https://learnstack-taskforge-web.onrender.com** → log in → add a product → go to Cart. Find 6 bugs. **Need 5/6 to pass.**
+Log in at **https://learnstack-taskforge-web.onrender.com** then go to **`/billing`** — the subscription upgrade page. Find 6 bugs. **Need 5/6 to pass.**
 
-**Login:** `bob@taskforge.io` / `Password1!` — press **Enter** to submit (the button is a known bug).
+**Login:** `bob@taskforge.io` / `Password1!` — press **Enter** to submit (the login button is a known bug).
+
+## What you're testing
+
+The billing page lets teams choose a subscription plan, set a seat count, and apply promo codes. It has 6 planted bugs — look for:
+
+- Seat count going below a valid number
+- Price totals not updating when they should
+- Promo code behaviour (try `SAVE10`)
+- Button states that don't match app state
+- How prices are displayed
 
 ## Format
 
 ```yaml
 bugs:
-  - title: "[Area] What's wrong when doing what"
-    location: "cart/component-name"
+  - title: "[Billing] What's wrong when doing what"
+    location: "billing/component-name"
     severity: Critical | High | Medium | Low
     priority: High | Medium | Low
     environment:
       browser: Chrome 130
       os: macOS 14
       viewport: 1440x900
-      url: "https://learnstack-taskforge-web.onrender.com/cart"
+      url: "https://learnstack-taskforge-web.onrender.com/billing"
     steps:
       - action: navigate
-        url: "/cart"
+        url: "/billing"
       - action: click
-        selector: '[data-test="qty-decrease"]'
+        selector: '[data-test="seat-decrease"]'
       - action: assert_text
-        selector: '[data-test="cart-total"]'
-        value: "updated total"
-    expected: "Total updates to reflect new quantity"
-    actual: "Total remains unchanged after quantity is decreased"
+        selector: '[data-test="seat-count"]'
+        value: "0"
+    expected: "Seat count cannot go below 1"
+    actual: "Seat count decremented to 0"
 ```
 
 ## Tips
 
-- Try the coupon code field with "SAVE10".
-- Decrease quantity all the way to 0 using the minus button.
-- Remove all items from the cart and observe the state.
-- Add an item priced over $100 and check the displayed price carefully.
-- Check the browser console after clicking Remove.
+- Try the `−` button on seat count repeatedly until something odd happens.
+- Select a plan, then click Remove — what happens to the total?
+- Enter promo code `SAVE10` — check the final price carefully.
+- Look at the price numbers displayed on each plan card.
+- Check whether the Proceed button is active when it shouldn't be.

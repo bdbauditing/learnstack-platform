@@ -21,6 +21,8 @@ This is everything from exercises 01–07 combined:
 **Test credentials:** `bob@taskforge.io` / `Password1!`
 > The login submit button is visually broken (that's one of the bugs). Press **Enter** to log in and access the rest of the app.
 
+**Pages to test:** `/login`, `/register`, `/` (dashboard), `/tasks`, `/billing`, `/profile`
+
 ## Deliverable
 
 `starter/bugs.yaml` — 10 bug reports. At least 8 must pass both:

@@ -1,5 +1,7 @@
 # Exercise 07 — Traceability Matrix
 
+> **Note:** This exercise uses a hypothetical product spec to practice the traceability technique. You don't need to open TaskForge — focus on the mapping exercise itself.
+
 **Technique focus:** Requirements Traceability
 
 **Time:** ~30 minutes
