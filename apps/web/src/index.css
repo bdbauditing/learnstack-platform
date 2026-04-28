@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* prose-gray sets a dark gray-800 pre background that clashes with the highlight.js github light theme.
+   Override pre to be transparent and let .hljs handle all code block colors/padding. */
+.prose pre {
+  background-color: transparent;
+  padding: 0;
+  margin-top: 0;
+}
+
+.prose pre > code.hljs {
+  border-radius: 0.375rem;
+  font-size: 0.875em;
+}
